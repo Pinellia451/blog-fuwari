@@ -45,10 +45,21 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		{
+			name: "友链",
+			url: "./friends/", // Internal links should not include the base path, as it is automatically added		
+			external: false, // Show an external link icon and will open in a new tab
+		},
+		{
+			name: "知识库",
+			url: "https://garden.pinellia.com",
+			external: true, // Show an external link icon and will open in a new tab
+		},
+		{
 			name: "GitHub",
 			url: "https://github.com/Pinellia451", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
+
 	],
 };
 

@@ -1,5 +1,5 @@
 ---
-title: 从这里开始
+title: hi
 published: 2025-08-06
 description: 简单模板
 tags: [Markdown, Blogging, Demo]
@@ -9,6 +9,18 @@ draft: false
 # 简单教程
 
 https://2x.nz/posts/fuwari/
+
+# 使用
+
+pnpm dev
+
+git push
+
+# 创建页面
+
+spec里面创建md
+
+pages里面从about.astro创建副本
 
 # An h1 header
 

@@ -1,12 +1,10 @@
-# About
+# Hey
 
 This is the site for Pinellia.
-
 
 Blog template:
 
 ::github{repo="saicaca/fuwari"}
-
 
 Sources of images used in this site
 

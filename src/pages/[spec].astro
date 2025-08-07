@@ -1,0 +1,49 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import Markdown from "@components/misc/Markdown.astro";
+import I18nKey from "../i18n/i18nKey";
+import { i18n } from "../i18n/translation";
+import MainGridLayout from "../layouts/MainGridLayout.astro";
+
+export async function getStaticPaths() {
+    // 定义要排除的页面列表，方便后期添加其他页面
+    const excludeList = ["about", "friends"];
+    
+    const specEntries = await getCollection("pages");
+    // 排除 excludeList 中的所有 slug
+    const filteredEntries = specEntries.filter(entry => 
+        !excludeList.includes(entry.slug)
+    );
+    return filteredEntries.map((entry) => ({
+        params: { spec: entry.slug },
+        props: { entry }
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// 获取 i18n key，如果不存在则使用 slug 作为 fallback
+const getI18nKey = (slug: string) => {
+    // 检查 I18nKey 中是否存在对应的键
+    if (slug in I18nKey) {
+        return I18nKey[slug as keyof typeof I18nKey];
+    }
+    // 如果不存在，返回 slug 本身作为 fallback
+    return slug;
+};
+
+const i18nKey = getI18nKey(entry.slug);
+const title = i18n(i18nKey);
+const description = i18n(i18nKey);
+---
+
+<MainGridLayout title={title} description={description}>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+        <div class="card-base z-10 px-9 py-6 relative w-full ">
+            <Markdown class="mt-2">
+                <Content />
+            </Markdown>
+        </div>
+    </div>
+</MainGridLayout>
