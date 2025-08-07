@@ -139,3 +139,7 @@
 .collapsed {
     height: var(--collapsedHeight);
 }
+
+.giscus {
+    margin-bottom: 16px;
+}

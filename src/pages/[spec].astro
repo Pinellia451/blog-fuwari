@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import Markdown from "@components/misc/Markdown.astro";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
+import Giscus from "../components/Giscus.astro";
 import MainGridLayout from "../layouts/MainGridLayout.astro";
 
 export async function getStaticPaths() {
@@ -45,22 +46,7 @@ const description = i18n(i18nKey);
                 <Content />
             </Markdown>
             <!-- Giscus 评论组件 -->
-            <script src="https://giscus.app/client.js"
-                data-repo="Pinellia451/blog-fuwari"
-                data-repo-id="R_kgDOPZXEow"
-                data-category="Announcements"
-                data-category-id="DIC_kwDOPZXEo84Ct5K-"
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="top"
-                data-theme="preferred_color_scheme"
-                data-lang="zh-CN"
-                data-loading="lazy"
-                crossorigin="anonymous"
-                async>
-            </script>
+            <Giscus class="onload-animation" />
             
         </div>
         

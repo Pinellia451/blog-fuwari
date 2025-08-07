@@ -1,5 +1,6 @@
 import type {
 	ExpressiveCodeConfig,
+	GiscusConfig,
 	LicenseConfig,
 	NavBarConfig,
 	ProfileConfig,
@@ -98,4 +99,15 @@ export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
 	// Please select a dark theme, as this blog theme currently only supports dark background color
 	theme: "github-dark",
+};
+
+export const giscusConfig: GiscusConfig = {
+	// 动态切换主题 blog-fuwari/src/components/Giscus.astro
+	enable: true,
+	repo: "Pinellia451/blog-fuwari",
+	repoId: "R_kgDOPZXEow",
+	category: "Announcements",
+	categoryId: "DIC_kwDOPZXEo84Ct5K-",
+	mapping: "pathname",
+	lang: "zh-CN",
 };
