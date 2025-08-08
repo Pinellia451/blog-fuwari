@@ -24,4 +24,8 @@ published: 2023-10-19
 
 ## Bilibili
 
-<iframe width="100%" height="468" src="https://player.bilibili.com/player.html?bvid=BV1fK4y1s7Qf&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+<div style="position: relative; width: 60%; aspect-ratio: 16/9;">
+    <iframe src="//player.bilibili.com/player.html?bvid=BV1Fm4ZzDEeY"
+        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+        scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+</div>
