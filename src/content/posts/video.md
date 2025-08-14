@@ -29,3 +29,7 @@ published: 2023-10-19
         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
         scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
 </div>
+
+## m3u8
+
+<iframe src="https://m3u8player.org/player.html?url=https://raw.githubusercontent.com/Pinellia451/m3u8-storge/refs/heads/main/11.m3u8"></iframe>
