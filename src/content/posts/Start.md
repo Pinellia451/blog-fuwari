@@ -1,6 +1,6 @@
 ---
 title: 从这里开始
-published: 2025-08-06
+-06
 description: 简单模板
 tags: [Markdown, Blogging, Demo]
 category: module
