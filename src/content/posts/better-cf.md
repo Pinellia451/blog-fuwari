@@ -16,7 +16,7 @@ https://cmliussss.com/p/BestWorkers/
 
 ### itdog tcping全绿：
 
-![1755619518954](image/better-cf/1755619518954.png)
+![1755619518954](https://ipfs.pinellia.uk/ipfs/QmYaCGNTTrshP8FbKaCkbfCfpqWMBE3aVE3G8UtmNF2s2U)
 
 但本地的设备包括电脑手机，在走直连的情况下，访问极其受限，大部分情况下：
 
@@ -40,4 +40,3 @@ clash的dns结果与itdog吻合：
 
 rec：
 平板和电脑等了很长时间莫名其妙就能连接了
-
