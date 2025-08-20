@@ -14,10 +14,10 @@ export const friendsData: FriendLink[] = [
     avatar: "http://blog.212676.xyz/img/icon1.svg",
   },
   {
-    name: "Pinellia's blog --google",
-    url: "http://blog.pinellia.uk/",
+    name: "Cangchu's blog",
+    url: "http://blog.212676.xyz/",
     description: "碎碎念",
-    avatar: "http://blog.pinellia.uk/favicon.ico",
+    avatar: "http://blog.212676.xyz/favicon.ico",
   },
   {
     name: "AcoFork Blog",
