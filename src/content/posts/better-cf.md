@@ -30,8 +30,8 @@ curl报错为curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to
 clash的dns结果与itdog吻合：
 
 <div style="display: flex; gap: 16px;">
-    <img src="image/better-cf/1755619893625.png" alt="1755619893625" style="width: 49%;">
-    <img src="image/better-cf/1755619405601.png" alt="1755619405601" style="width: 49%;">
+    <img src="https://ipfs.crossbell.io/ipfs/QmfHVxTswG6Yr3B4ZJVjTMzkSzg5BszYAiLabQH6UN3iXt" alt="1755619893625" style="width: 49%;">
+    <img src="https://ipfs.crossbell.io/ipfs/QmQ1x4uCyp56m4X7q65sS3DJbACVn79DnKv87b2JpjMbpM" alt="1755619405601" style="width: 49%;">
 </div>
 
 尝试指定
