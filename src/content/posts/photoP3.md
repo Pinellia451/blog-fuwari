@@ -38,14 +38,14 @@ draft: false
 [![](https://ipfs.crossbell.io/ipfs/QmV1s9osojYYsVgdBSuk3gJF2ffMKc8LC8c19C281gDa3y)
 假如用卡纸剪出心形置于镜头前，光斑也成心形⬇️
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEhgYqrobXjCS2QFJsE291T0XIQCQAnOVi6zGhg96_SyGya_iDoIVFERCyALKsSwb_3Rk2ulDWeQ0q3DAR5udXyzbSkRz2oo-MR8-olsfUacah-0d8VfdfN-2vtaFCZ5X7RHeJw8kzDVOiNe5L5VyiVI77iqeqzUjcs1fsN388w3W7wEN2qJqAel_9zaO9KF=s320)
+![](https://ipfs.crossbell.io/ipfs/QmZEjzyReiSeLp1h34DvHsBffTGbS1nemLgkKMYXLWsCyS)
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEigzkNffgaylnFNFxaVkZyDLORBKNQJLJfbk_UP8jJQvIdcpgDLFbv8nU4t0kg_fl2B_NffDGb3AFVyrsuJAFbwitWj_9gJBNcBc-x1g4WFIlVqg6tFrr5eocyZVE18Ttx-CJg2ppNCdUBj0r-UBJ8TAN7xZGeJa6KtQS-rs4KDlaisSInYUHqbiNl6CJ1O)
+![](https://ipfs.crossbell.io/ipfs/QmbuZtrtU44MBvrjevDqX1bUH89A9u2wZZVbnYoYPjziuj)
 ④虚化的不止背景，还可以有前景。
 
 **前景虚化** ，可增添照片的梦幻感⬇️
 
-[](https://blogger.googleusercontent.com/img/a/AVvXsEjjyz9wIbJVYFE6mbEScSMzdQTtSV2yrPj7NrVWB6Bjqpe4Pod2OVux-xknRPxeMT6IG-ViZT4dMienBRY4kKYlIpen7JdGKmioZ-kLybEFPGVD46tP7XdnjQLxhMzmLQHdXsWf6fU3eO59rCJhx3qV5tmdYN0FfmYaOYXmokU76neIpzcYQ1m6ECR5hWtv)
+![](https://ipfs.crossbell.io/ipfs/QmVs1MscQWeFa3NADBe1wu1L1D5HzGExsBZ4NjTaqkh64W)
 ⑤光圈与对焦的关系
 
 光圈越大，越难对焦
@@ -71,16 +71,16 @@ draft: false
 eg:
 
 车流（为防止糊片，需要三脚架固定）⬇️
-![](https://blogger.googleusercontent.com/img/a/AVvXsEhG4SJhi6seSDkarT6unb1dcBWdFR89UCNg7sWORbcWuon1g_W64_7Jhqn4dUBk2ekGaAlCKyZi0mYl1C9MuY0rnLf-vY7k0NLqSZJKyz8rjBSkqcHwX_PdzwOF7BOydlpk5R07YRKP1mmGh86zfGwOviNzEkBO36j-KSYMsaMGQ_oWAYfy35JFYJ0jGOOm)
+![](https://ipfs.crossbell.io/ipfs/QmVs1MscQWeFa3NADBe1wu1L1D5HzGExsBZ4NjTaqkh64W)
 星轨⬇️
 
-![]](https://blogger.googleusercontent.com/img/a/AVvXsEhK6qPB2OfOQvLTXO8fj6-j9HCqNgUOKW_Apam76ix94W9DIBTsk1mXUDJPvDnz7_5PqVL5MW-cG2-JML6gL4GoN8MfjuU5mMbkJCSx7FXymMtMUVa5eQLTFw72ZlNuiwpSNmJFa4Nm7OasTAURmOKWtApcJJkQw47BqVWvJW_0t9vImRgLY6dbzuWeJF4Z)
+![](https://ipfs.crossbell.io/ipfs/QmcE4WUd6Y4r4DDHy4uMh8u2Xyj2ZsRh5Mn3W67JDuAVPF)
 烟花⬇️
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEgkjrg7cnae9XPbv_tvJtrFSR5YeTpaWiYiRP7NoOAd92jmeVY3g4kSktuWGi8hdgYfUL65zspZrcoEJ5pP-FlurBmFZGuZU5IHZXwQHCH52CDs6JbbuGfB81iVbUp-HSKwEWJf13AnoBdg3xy5uaTG8MzoBTbwA-KEt_1HEClKq9sPXU3XPR3kutijMmVe)
+![](https://ipfs.crossbell.io/ipfs/QmZjFs1aZ1x33ouiisypqfrbikGEtDyW8bLp3FmP6jAuq8)
 运动镜头⬇️
 
-![](https://blogger.googleusercontent.com/img/a/AVvXsEjwjajoQutzLk5I61eFd0mHM1ZJKnUVvOZKXD8XpNYav8p5b9uHcH07-5e0gc85j1chTWbcjOyViAKlsbCxKVLWmGcS5YaHF8fVILRfpwhLPcg37paw31Uzse1-V5xeOVSclNh30W8PDlBrYJN6qVT9Cob-2h8rQAv3TZwG-TfujZWIjmwPbNHxNJVpCifO)
+![](https://ipfs.crossbell.io/ipfs/QmRVSsDda3Mh4jTj6nJ8a4F7kT7G92Ty8UrJVaztiMgBXX)
 3. up总结
 
 **光圈大→提高亮度、产生虚化**
@@ -93,7 +93,7 @@ eg:
 
 如图⬇️
 
-[](https://blogger.googleusercontent.com/img/a/AVvXsEi-epu88q-SLKruSAV6HVzjT17GphATgD82l6JqZtbxvqymGGaBWWwSJUwYPnF6rnbYOxYv1U452N7St_8ra5DLLQzUH-7mCX0DFP5lSlsZFtP_6SADIFe6UQ-xOspozgoI3KdMJVjzZ_DdrONc2Xbp-pLjbrlJZq132aj7oj-Coe2eHGwtgO_K4cOSveGP)
+![](https://ipfs.crossbell.io/ipfs/QmRw4jvmt7a1k7Ho5rBrRCgDDmRJbYQk6ZPxhjAr8BPSpy)
 答:___________________________
 
 Ps:如果大太阳下，即使ISO降到100，画面依然过曝，不得不减小光圈/调快快门。
@@ -102,10 +102,10 @@ Ps:如果大太阳下，即使ISO降到100，画面依然过曝，不得不减�
 
 效果:使用前⬇️
 
-[](https://blogger.googleusercontent.com/img/a/AVvXsEj0T1ITwzWc8aphXO2aBLSUl6ndS4u37plJq5ImOB6zTpbR5Oe2xMH4JSubPCfDeK9r9QGWZXnfw9uiXku58YInIBb-39mgnnnaO09hgq0wMwK0c9UpPUffqJLjL4_29sxJvkm2bDTdXp6glDpEdxWPkEpHYjy52UC7kyAENVNuWhrBOskREgqX0UdM-FUD)
+![](https://ipfs.crossbell.io/ipfs/QmZHB13kZNuMPYuqG5UbYLsndCT7dTbMDptoEqQW3RRoEW)
 使用后⬇️
 
-[](https://blogger.googleusercontent.com/img/a/AVvXsEhIR-Pfg1BzwSbTqknZYkO2DvR7h8N5GX-_UahssLPWxuTm4g2jK1gf8mHuxdaiZ7EX4QdvRJqK1mdiJk_2YYxUW6Yrj1N4Q3lESi7FgrtH9HyyOdWFdNUAk2sQxS0iuvjgunyv0ix7ZsmZ24Jbn90DOkL-TH3x2vc-tBNHxyc4Wkp2TXSXN0i-mR4qKzNV)
+![](https://ipfs.crossbell.io/ipfs/QmUHxXGmeM42uu4js4pbiobacMcNYFVGLsTN9GnHjGfHQ3)
 4.人对事物理解的四个层次:（勉励自己运用）
 
 5.作业:拍摄尝试
