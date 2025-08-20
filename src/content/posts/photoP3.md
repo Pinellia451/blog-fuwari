@@ -28,24 +28,24 @@ draft: false
 
 大光圈，背景虚化越强⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmQHyUhvEvkdPtXHCzrBL3JsE62PsjbKcHAcH1mFhksqDJ)
+![](https://ipfs.pinellia.uk/ipfs/QmQHyUhvEvkdPtXHCzrBL3JsE62PsjbKcHAcH1mFhksqDJ)
 小光圈，背景虚化越弱⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmUS394ov5o7NJyYqjKt1GkbK3mow6U6gEWq4SnVKqonq3)
+![](https://ipfs.pinellia.uk/ipfs/QmUS394ov5o7NJyYqjKt1GkbK3mow6U6gEWq4SnVKqonq3)
 ③虚化强弱的理解
 
 **光斑的形状来源于光圈扇叶形成的圆洞**
-[![](https://ipfs.crossbell.io/ipfs/QmV1s9osojYYsVgdBSuk3gJF2ffMKc8LC8c19C281gDa3y)
+[![](https://ipfs.pinellia.uk/ipfs/QmV1s9osojYYsVgdBSuk3gJF2ffMKc8LC8c19C281gDa3y)
 假如用卡纸剪出心形置于镜头前，光斑也成心形⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmZEjzyReiSeLp1h34DvHsBffTGbS1nemLgkKMYXLWsCyS)
+![](https://ipfs.pinellia.uk/ipfs/QmZEjzyReiSeLp1h34DvHsBffTGbS1nemLgkKMYXLWsCyS)
 
-![](https://ipfs.crossbell.io/ipfs/QmbuZtrtU44MBvrjevDqX1bUH89A9u2wZZVbnYoYPjziuj)
+![](https://ipfs.pinellia.uk/ipfs/QmbuZtrtU44MBvrjevDqX1bUH89A9u2wZZVbnYoYPjziuj)
 ④虚化的不止背景，还可以有前景。
 
 **前景虚化** ，可增添照片的梦幻感⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmVs1MscQWeFa3NADBe1wu1L1D5HzGExsBZ4NjTaqkh64W)
+![](https://ipfs.pinellia.uk/ipfs/QmVs1MscQWeFa3NADBe1wu1L1D5HzGExsBZ4NjTaqkh64W)
 ⑤光圈与对焦的关系
 
 光圈越大，越难对焦
@@ -71,16 +71,16 @@ draft: false
 eg:
 
 车流（为防止糊片，需要三脚架固定）⬇️
-![](https://ipfs.crossbell.io/ipfs/QmVs1MscQWeFa3NADBe1wu1L1D5HzGExsBZ4NjTaqkh64W)
+![](https://ipfs.pinellia.uk/ipfs/QmVs1MscQWeFa3NADBe1wu1L1D5HzGExsBZ4NjTaqkh64W)
 星轨⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmcE4WUd6Y4r4DDHy4uMh8u2Xyj2ZsRh5Mn3W67JDuAVPF)
+![](https://ipfs.pinellia.uk/ipfs/QmcE4WUd6Y4r4DDHy4uMh8u2Xyj2ZsRh5Mn3W67JDuAVPF)
 烟花⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmZjFs1aZ1x33ouiisypqfrbikGEtDyW8bLp3FmP6jAuq8)
+![](https://ipfs.pinellia.uk/ipfs/QmZjFs1aZ1x33ouiisypqfrbikGEtDyW8bLp3FmP6jAuq8)
 运动镜头⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmRVSsDda3Mh4jTj6nJ8a4F7kT7G92Ty8UrJVaztiMgBXX)
+![](https://ipfs.pinellia.uk/ipfs/QmRVSsDda3Mh4jTj6nJ8a4F7kT7G92Ty8UrJVaztiMgBXX)
 3. up总结
 
 **光圈大→提高亮度、产生虚化**
@@ -93,7 +93,7 @@ eg:
 
 如图⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmRw4jvmt7a1k7Ho5rBrRCgDDmRJbYQk6ZPxhjAr8BPSpy)
+![](https://ipfs.pinellia.uk/ipfs/QmRw4jvmt7a1k7Ho5rBrRCgDDmRJbYQk6ZPxhjAr8BPSpy)
 答:___________________________
 
 Ps:如果大太阳下，即使ISO降到100，画面依然过曝，不得不减小光圈/调快快门。
@@ -102,10 +102,10 @@ Ps:如果大太阳下，即使ISO降到100，画面依然过曝，不得不减�
 
 效果:使用前⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmZHB13kZNuMPYuqG5UbYLsndCT7dTbMDptoEqQW3RRoEW)
+![](https://ipfs.pinellia.uk/ipfs/QmZHB13kZNuMPYuqG5UbYLsndCT7dTbMDptoEqQW3RRoEW)
 使用后⬇️
 
-![](https://ipfs.crossbell.io/ipfs/QmUHxXGmeM42uu4js4pbiobacMcNYFVGLsTN9GnHjGfHQ3)
+![](https://ipfs.pinellia.uk/ipfs/QmUHxXGmeM42uu4js4pbiobacMcNYFVGLsTN9GnHjGfHQ3)
 4.人对事物理解的四个层次:（勉励自己运用）
 
 5.作业:拍摄尝试
