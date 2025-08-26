@@ -112,11 +112,25 @@ class TableOfContents extends HTMLElement {
             this.tocEntries[i].classList.remove(this.visibleClass);
             i--;
         }
-        let parentOffset = this.tocEl?.getBoundingClientRect().top || 0;
-        let scrollOffset = this.tocEl?.scrollTop || 0;
-        let top = this.tocEntries[min].getBoundingClientRect().top - parentOffset + scrollOffset;
-        let bottom = this.tocEntries[max].getBoundingClientRect().bottom - parentOffset + scrollOffset;
-        this.activeIndicator?.setAttribute("style", `top: ${top}px; height: ${bottom - top}px`);
+        
+        if (!this.tocEntries[min] || !this.tocEntries[max] || !this.activeIndicator) return;
+        
+        // 使用 offsetTop 和 offsetHeight 而不是 getBoundingClientRect 来提高缩放兼容性
+        const tocContainer = this.tocEntries[min].closest('table-of-contents');
+        if (!tocContainer) return;
+        
+        const minElement = this.tocEntries[min];
+        const maxElement = this.tocEntries[max];
+        
+        // 计算相对于 TOC 容器的位置
+        let top = minElement.offsetTop;
+        let bottom = maxElement.offsetTop + maxElement.offsetHeight;
+        
+        // 如果有父级容器的 scrollTop，需要考虑进去
+        const scrollOffset = this.tocEl?.scrollTop || 0;
+        
+        this.activeIndicator.style.top = `${top}px`;
+        this.activeIndicator.style.height = `${bottom - top}px`;
     };
 
     scrollToActiveHeading = () => {
@@ -126,7 +140,7 @@ class TableOfContents extends HTMLElement {
 
         if (this.anchorNavTarget || !this.tocEl) return;
         const activeHeading =
-            document.querySelectorAll<HTMLDivElement>(`#toc .${this.visibleClass}`);
+            this.querySelectorAll<HTMLDivElement>(`.${this.visibleClass}`);
         if (!activeHeading.length) return;
 
         const topmost = activeHeading[0];
@@ -209,9 +223,8 @@ class TableOfContents extends HTMLElement {
     };
 
     init() {
-        this.tocEl = document.getElementById(
-            "toc-inner-wrapper"
-        );
+        // 首先尝试找到右侧的 TOC 容器，如果找不到就使用当前组件作为容器
+        this.tocEl = document.getElementById("toc-inner-wrapper") || this.closest('table-of-contents');
 
         if (!this.tocEl) return;
 
@@ -219,10 +232,12 @@ class TableOfContents extends HTMLElement {
             capture: true,
         });
 
-        this.activeIndicator = document.getElementById("active-indicator");
+        // 查找当前 TOC 组件内的 active-indicator
+        this.activeIndicator = this.querySelector("#active-indicator") as HTMLElement;
 
+        // 查找当前 TOC 组件内的链接
         this.tocEntries = Array.from(
-            document.querySelectorAll<HTMLAnchorElement>("#toc a[href^='#']")
+            this.querySelectorAll<HTMLAnchorElement>("a[href^='#']")
         );
 
         if (this.tocEntries.length === 0) return;
