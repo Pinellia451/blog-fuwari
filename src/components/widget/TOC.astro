@@ -140,7 +140,7 @@ class TableOfContents extends HTMLElement {
 
         if (this.anchorNavTarget || !this.tocEl) return;
         const activeHeading =
-            this.querySelectorAll<HTMLDivElement>(`.${this.visibleClass}`);
+            this.querySelectorAll<HTMLDivElement>(`#toc .${this.visibleClass}`);
         if (!activeHeading.length) return;
 
         const topmost = activeHeading[0];
