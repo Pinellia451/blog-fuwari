@@ -2,9 +2,6 @@
 import type { MarkdownHeading } from "astro";
 import { siteConfig } from "../../config";
 import { url } from "../../utils/url-utils";
-import I18nKey from "../../i18n/i18nKey";
-import { i18n } from "../../i18n/translation";
-import WidgetLayout from "./WidgetLayout.astro";
 
 interface Props {
 	class?: string;
@@ -35,34 +32,32 @@ let heading1Count = 1;
 const maxLevel = siteConfig.toc.depth;
 ---
 {isPostsRoute &&
-<WidgetLayout name={i18n(I18nKey.toc)} id="toc-widget" class={className}>
-    <table-of-contents class="group">
-        {headings.filter((heading) => heading.depth < minDepth + maxLevel).map((heading) =>
-                <a href={`#${heading.slug}`} class="px-2 flex gap-2 relative transition w-full min-h-9 rounded-xl
-            hover:bg-[var(--toc-btn-hover)] active:bg-[var(--toc-btn-active)] py-2
-        ">
-                    <div class:list={["transition w-5 h-5 shrink-0 rounded-lg text-xs flex items-center justify-center font-bold",
-                        {
-                            "bg-[var(--toc-badge-bg)] text-[var(--btn-content)]": heading.depth == minDepth,
-                            "ml-4": heading.depth == minDepth + 1,
-                            "ml-8": heading.depth == minDepth + 2,
-                        }
-                    ]}
-                    >
-                        {heading.depth == minDepth && heading1Count++}
-                        {heading.depth == minDepth + 1 && <div class="transition w-2 h-2 rounded-[0.1875rem] bg-[var(--toc-badge-bg)]"></div>}
-                        {heading.depth == minDepth + 2 && <div class="transition w-1.5 h-1.5 rounded-sm bg-black/5 dark:bg-white/10"></div>}
-                    </div>
-                    <div class:list={["transition text-sm", {
-                        "text-50": heading.depth == minDepth || heading.depth == minDepth + 1,
-                        "text-30": heading.depth == minDepth + 2,
-                    }]}>{removeTailingHash(heading.text)}</div>
-                </a>
-        )}
-        <div id="active-indicator" class:list={[{'hidden': headings.length == 0}, "-z-10 absolute bg-[var(--toc-btn-hover)] left-0 right-0 rounded-xl transition-all " +
-            "group-hover:bg-transparent border-2 border-[var(--toc-btn-hover)] group-hover:border-[var(--toc-btn-active)] border-dashed"]}></div>
-    </table-of-contents>
-</WidgetLayout>}
+<table-of-contents class:list={[className, "group"]}>
+    {headings.filter((heading) => heading.depth < minDepth + maxLevel).map((heading) =>
+            <a href={`#${heading.slug}`} class="px-2 flex gap-2 relative transition w-full min-h-9 rounded-xl
+        hover:bg-[var(--toc-btn-hover)] active:bg-[var(--toc-btn-active)] py-2
+    ">
+                <div class:list={["transition w-5 h-5 shrink-0 rounded-lg text-xs flex items-center justify-center font-bold",
+                    {
+                        "bg-[var(--toc-badge-bg)] text-[var(--btn-content)]": heading.depth == minDepth,
+                        "ml-4": heading.depth == minDepth + 1,
+                        "ml-8": heading.depth == minDepth + 2,
+                    }
+                ]}
+                >
+                    {heading.depth == minDepth && heading1Count++}
+                    {heading.depth == minDepth + 1 && <div class="transition w-2 h-2 rounded-[0.1875rem] bg-[var(--toc-badge-bg)]"></div>}
+                    {heading.depth == minDepth + 2 && <div class="transition w-1.5 h-1.5 rounded-sm bg-black/5 dark:bg-white/10"></div>}
+                </div>
+                <div class:list={["transition text-sm", {
+                    "text-50": heading.depth == minDepth || heading.depth == minDepth + 1,
+                    "text-30": heading.depth == minDepth + 2,
+                }]}>{removeTailingHash(heading.text)}</div>
+            </a>
+    )}
+    <div id="active-indicator" class:list={[{'hidden': headings.length == 0}, "-z-10 absolute bg-[var(--toc-btn-hover)] left-0 right-0 rounded-xl transition-all " +
+        "group-hover:bg-transparent border-2 border-[var(--toc-btn-hover)] group-hover:border-[var(--toc-btn-active)] border-dashed"]}></div>
+</table-of-contents>}
 
 <script>
 class TableOfContents extends HTMLElement {
@@ -117,25 +112,11 @@ class TableOfContents extends HTMLElement {
             this.tocEntries[i].classList.remove(this.visibleClass);
             i--;
         }
-        
-        if (!this.tocEntries[min] || !this.tocEntries[max] || !this.activeIndicator) return;
-        
-        // 使用 offsetTop 和 offsetHeight 而不是 getBoundingClientRect 来提高缩放兼容性
-        const tocContainer = this.tocEntries[min].closest('table-of-contents');
-        if (!tocContainer) return;
-        
-        const minElement = this.tocEntries[min];
-        const maxElement = this.tocEntries[max];
-        
-        // 计算相对于 TOC 容器的位置
-        let top = minElement.offsetTop;
-        let bottom = maxElement.offsetTop + maxElement.offsetHeight;
-        
-        // 如果有父级容器的 scrollTop，需要考虑进去
-        const scrollOffset = this.tocEl?.scrollTop || 0;
-        
-        this.activeIndicator.style.top = `${top}px`;
-        this.activeIndicator.style.height = `${bottom - top}px`;
+        let parentOffset = this.tocEl?.getBoundingClientRect().top || 0;
+        let scrollOffset = this.tocEl?.scrollTop || 0;
+        let top = this.tocEntries[min].getBoundingClientRect().top - parentOffset + scrollOffset;
+        let bottom = this.tocEntries[max].getBoundingClientRect().bottom - parentOffset + scrollOffset;
+        this.activeIndicator?.setAttribute("style", `top: ${top}px; height: ${bottom - top}px`);
     };
 
     scrollToActiveHeading = () => {
@@ -145,7 +126,7 @@ class TableOfContents extends HTMLElement {
 
         if (this.anchorNavTarget || !this.tocEl) return;
         const activeHeading =
-            this.querySelectorAll<HTMLDivElement>(`#toc .${this.visibleClass}`);
+            document.querySelectorAll<HTMLDivElement>(`#toc .${this.visibleClass}`);
         if (!activeHeading.length) return;
 
         const topmost = activeHeading[0];
@@ -228,8 +209,9 @@ class TableOfContents extends HTMLElement {
     };
 
     init() {
-        // 首先尝试找到右侧的 TOC 容器，如果找不到就使用当前组件作为容器
-        this.tocEl = document.getElementById("toc-inner-wrapper") || this.closest('widget-layout')?.querySelector('#toc-widget');
+        this.tocEl = document.getElementById(
+            "toc-inner-wrapper"
+        );
 
         if (!this.tocEl) return;
 
@@ -237,12 +219,10 @@ class TableOfContents extends HTMLElement {
             capture: true,
         });
 
-        // 查找当前 TOC 组件内的 active-indicator
-        this.activeIndicator = this.querySelector("#active-indicator") as HTMLElement;
+        this.activeIndicator = document.getElementById("active-indicator");
 
-        // 查找当前 TOC 组件内的链接
         this.tocEntries = Array.from(
-            this.querySelectorAll<HTMLAnchorElement>("a[href^='#']")
+            document.querySelectorAll<HTMLAnchorElement>("#toc a[href^='#']")
         );
 
         if (this.tocEntries.length === 0) return;
