@@ -3,9 +3,10 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils.ts";
 
-// // Retrieve posts and sort them by publication date
+// 获取所有帖子（包括隐藏的），用于归档页面
 async function getRawSortedPosts() {
 	const allBlogPosts = await getCollection("posts", ({ data }) => {
+		// 只过滤掉草稿，保留隐藏的帖子
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
 
@@ -17,7 +18,43 @@ async function getRawSortedPosts() {
 	return sorted;
 }
 
+// 获取非隐藏的帖子，用于首页显示
+async function getRawSortedPostsForHome() {
+	const allBlogPosts = await getCollection("posts", ({ data }) => {
+		// 在生产环境中过滤掉草稿和隐藏的帖子，在开发环境中只过滤隐藏的帖子
+		if (import.meta.env.PROD) {
+			return data.draft !== true && data.hide !== true;
+		} else {
+			return data.hide !== true;
+		}
+	});
+
+	const sorted = allBlogPosts.sort((a, b) => {
+		const dateA = new Date(a.data.published);
+		const dateB = new Date(b.data.published);
+		return dateA > dateB ? -1 : 1;
+	});
+	return sorted;
+}
+
+// 用于首页显示的帖子（过滤隐藏的帖子）
 export async function getSortedPosts() {
+	const sorted = await getRawSortedPostsForHome();
+
+	for (let i = 1; i < sorted.length; i++) {
+		sorted[i].data.nextSlug = sorted[i - 1].slug;
+		sorted[i].data.nextTitle = sorted[i - 1].data.title;
+	}
+	for (let i = 0; i < sorted.length - 1; i++) {
+		sorted[i].data.prevSlug = sorted[i + 1].slug;
+		sorted[i].data.prevTitle = sorted[i + 1].data.title;
+	}
+
+	return sorted;
+}
+
+// 用于归档页面的帖子（包括隐藏的帖子）
+export async function getSortedPostsForArchive() {
 	const sorted = await getRawSortedPosts();
 
 	for (let i = 1; i < sorted.length; i++) {
@@ -36,6 +73,18 @@ export type PostForList = {
 	data: CollectionEntry<"posts">["data"];
 };
 export async function getSortedPostsList(): Promise<PostForList[]> {
+	const sortedFullPosts = await getRawSortedPostsForHome();
+
+	// delete post.body
+	const sortedPostsList = sortedFullPosts.map((post) => ({
+		slug: post.slug,
+		data: post.data,
+	}));
+
+	return sortedPostsList;
+}
+
+export async function getSortedPostsListForArchive(): Promise<PostForList[]> {
 	const sortedFullPosts = await getRawSortedPosts();
 
 	// delete post.body
@@ -53,6 +102,7 @@ export type Tag = {
 
 export async function getTagList(): Promise<Tag[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
+		// 标签统计包含隐藏的帖子，只过滤草稿
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
 
@@ -80,6 +130,7 @@ export type Category = {
 
 export async function getCategoryList(): Promise<Category[]> {
 	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
+		// 分类统计包含隐藏的帖子，只过滤草稿
 		return import.meta.env.PROD ? data.draft !== true : true;
 	});
 	const count: { [key: string]: number } = {};
