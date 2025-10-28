@@ -154,6 +154,10 @@ export default defineConfig({
 		],
 	},
 	vite: {
+		// 排除导致优化问题的包
+		optimizeDeps: {
+			exclude: ["@swup/astro"]
+		},
 		build: {
 			rollupOptions: {
 				onwarn(warning, warn) {
