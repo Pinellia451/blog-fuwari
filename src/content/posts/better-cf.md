@@ -5,6 +5,7 @@ description: 尝试加速cf的服务国内访问，但失败
 tags: [Cloudflare]
 category: Cloudflare
 draft: false
+device: MacBook Pro
 ---
 # 参考
 

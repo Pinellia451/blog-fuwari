@@ -11,6 +11,9 @@ interface Props {
 	updated?: Date;
 	tags: string[];
 	category: string | null;
+	aigc?: string;
+	device?: string;
+	showAigcAfterTags?: boolean;
 	hideTagsForMobile?: boolean;
 	hideUpdateDate?: boolean;
 }
@@ -19,6 +22,9 @@ const {
 	updated,
 	tags,
 	category,
+	aigc = "",
+	device = "",
+	showAigcAfterTags = false,
 	hideTagsForMobile = false,
 	hideUpdateDate = false,
 } = Astro.props;
@@ -61,6 +67,28 @@ const className = Astro.props.class;
         </div>
     </div>
 
+    <!-- aigc -->
+    {!showAigcAfterTags && aigc && (
+        <div class="flex items-center">
+            <div class="meta-icon"
+            >
+                <Icon name="material-symbols:auto-awesome-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <span class="text-50 text-sm font-medium">{aigc}</span>
+        </div>
+    )}
+
+    <!-- publish device -->
+    {device && (
+        <div class="flex items-center">
+            <div class="meta-icon"
+            >
+                <Icon name="material-symbols:devices-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <span class="text-50 text-sm font-medium">{device}</span>
+        </div>
+    )}
+
     <!-- tags -->
     <div class:list={["items-center", {"flex": !hideTagsForMobile, "hidden md:flex": hideTagsForMobile}]}>
         <div class="meta-icon"
@@ -79,4 +107,15 @@ const className = Astro.props.class;
             {!(tags && tags.length > 0) && <div class="transition text-50 text-sm font-medium">{i18n(I18nKey.noTags)}</div>}
         </div>
     </div>
+
+    <!-- aigc after tags -->
+    {showAigcAfterTags && aigc && (
+        <div class="flex items-center">
+            <div class="meta-icon"
+            >
+                <Icon name="material-symbols:auto-awesome-outline-rounded" class="text-xl"></Icon>
+            </div>
+            <span class="text-50 text-sm font-medium">{aigc}</span>
+        </div>
+    )}
 </div>
