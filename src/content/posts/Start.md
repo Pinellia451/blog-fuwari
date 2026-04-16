@@ -5,6 +5,7 @@ description: 简单模板
 tags: [Markdown, Blogging, Demo]
 category: module
 draft: true
+device: Windows
 ---
 # 简单教程
 

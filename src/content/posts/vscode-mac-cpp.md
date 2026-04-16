@@ -5,6 +5,7 @@ description: 配置 vscode mac c++ 运行调试环境
 tags: [环境配置, vscode]
 category: 环境配置
 draft: false
+device: Windows
 ---
 # 使用的插件
 

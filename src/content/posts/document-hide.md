@@ -5,6 +5,7 @@ description: 使用cat以及binwalk进行简单的文件隐写，偷摸夹带私
 tags: [explore]
 category: explore
 draft: false
+device: Windows
 ---
 # 简单介绍
 

@@ -5,6 +5,7 @@ description: 力扣文字刷题列表
 tags: [leetcode, OI]
 category: OI
 draft: false
+device: Windows
 ---
 ## 第⼀章、基础数据结构
 

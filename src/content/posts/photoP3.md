@@ -5,6 +5,7 @@ description: 摄影学习记录
 tags: [摄影,]
 category: 摄影
 draft: false
+device: Windows
 ---
 
 > 1.光圈 可影响亮度、景深、虚化；对焦的本质；对焦和光圈的关系

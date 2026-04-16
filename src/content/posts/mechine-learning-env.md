@@ -5,6 +5,7 @@ description: 如何在无root权限的服务器上进行初步环境配置？ co
 tags: [conda, python,环境配置]
 category: 环境配置
 draft: false
+device: Windows
 ---
 # conda->micromamba
 

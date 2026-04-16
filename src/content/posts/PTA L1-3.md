@@ -5,6 +5,7 @@ description: PTA 刷题记录-第三部分
 tags: [OI,]
 category: OI
 draft: false
+device: Windows
 ---
 **首先对20道题进行一个分类吧~**
 

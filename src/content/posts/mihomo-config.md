@@ -5,6 +5,7 @@ description: 配置文件的补充说明
 tags: [环境配置,]
 category: 环境配置
 draft: false
+device: Windows
 ---
 # Android
 

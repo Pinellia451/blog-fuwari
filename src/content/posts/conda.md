@@ -5,6 +5,7 @@ description: 怎样配置 Python 环境？推荐使用 Miniconda
 tags: [conda, python,环境配置]
 category: 环境配置
 draft: false
+device: Windows
 ---
 # 介绍视频
 
