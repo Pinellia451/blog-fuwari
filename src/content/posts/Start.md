@@ -2,7 +2,7 @@
 title: 从这里开始
 published: 2024-05-01
 description: 简单模板
-tags: [Markdown, Blogging, Demo]
+tags: [demo, markdown]
 category: module
 draft: true
 device: Windows

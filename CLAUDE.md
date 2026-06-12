@@ -45,13 +45,14 @@ src/
 │   ├── Layout.astro       # Base HTML shell
 │   └── MainGridLayout.astro # Grid layout for index/archive
 ├── pages/
-│   ├── [...page].astro    # Paginated index (home)
-│   ├── [spec].astro       # Tag/category filtered view
-│   ├── archive.astro      # Archive page
-│   ├── about.astro        # About page
-│   ├── friends.astro      # Friends links page
-│   ├── rss.xml.ts         # RSS feed generation
-│   └── robots.txt.ts      # Robots.txt
+│   ├── [...page].astro       # Paginated index (home)
+│   ├── [spec].astro          # Static pages (about, friends) — excludes from slug list
+│   ├── posts/[...slug].astro # Individual post page
+│   ├── archive.astro         # Archive page
+│   ├── about.astro           # About page
+│   ├── friends.astro         # Friends links page
+│   ├── rss.xml.ts            # RSS feed generation
+│   └── robots.txt.ts         # Robots.txt
 ├── plugins/               # Custom remark/rehype plugins
 │   ├── rehype-component-admonition.mjs  # Admonition (note/tip/warning/etc.) rendering
 │   ├── rehype-component-github-card.mjs # GitHub repo card component
@@ -64,8 +65,16 @@ src/
 ├── styles/                # Global styles (CSS + Stylus)
 ├── types/config.ts        # TypeScript type definitions
 ├── i18n/                  # i18n translations (i18nKey.ts, translation.ts)
-├── constants/             # Constants (link presets, icons, theme modes)
-└── utils/                 # Utility functions (date, URL, content, settings)
+├── constants/             # Constants (link presets, icons, theme modes, tag display map)
+│   ├── constants.ts
+│   ├── icon.ts
+│   ├── link-presets.ts
+│   └── tag-display.ts     # Tag slug → display name mapping + getTagDisplayName()
+└── utils/                 # Utility functions
+    ├── content-utils.ts   # Post queries, getTagList(), getCategoryList()
+    ├── date-utils.ts      # Date formatting helpers
+    ├── setting-utils.ts   # Site setting helpers
+    └── url-utils.ts       # URL builders (getTagUrl, getCategoryUrl, getPostUrlBySlug)
 ```
 
 ### Post Frontmatter
@@ -76,17 +85,30 @@ Posts in `src/content/posts/` use YAML frontmatter:
 ---
 title: My First Blog Post
 published: 2023-09-09
+updated: 2024-11-29           # Optional: last-modified date (shown in PostMeta)
 description: Short description
-image: ./cover.jpg          # Optional: cover image (relative, /public, or URL)
-tags: [Foo, Bar]
-category: Front-end
-draft: false                # Set true to hide from published site
-device: Windows             # Optional: metadata badge (Windows, Linux, Mac)
-lang: jp                    # Optional: if post language differs from site lang
+image: ./cover.jpg            # Optional: cover image (relative, /public, or URL)
+tags: [conda, python, env-setup]
+category: 环境配置
+draft: false                  # true = hidden from all published views
+hide: true                    # Optional: hide from index but keep in archive/sitemap
+device: MacBook Pro           # Optional: metadata badge (Windows, Linux, Mac, MacBook Pro)
+aigc: Cursor                  # Optional: AI-assisted label
+lang: jp                      # Optional: override site language for this post
 ---
 ```
 
-Custom fields (added in this fork): `device`, `lang`, and AIGC-related metadata.
+Custom fields added in this fork: `device`, `lang`, `hide`, `aigc`, `updated`.
+
+### Tag System
+
+Tags follow a **slug → display name** architecture:
+
+- **In frontmatter**: tags are **English lowercase slugs** (e.g., `env-setup`, `photography`). These appear in URL query params (`/archive/?tag=photography`).
+- **On screen**: rendered via `getTagDisplayName()` in `src/constants/tag-display.ts`, which maps slugs to Chinese/human-readable names (e.g., `env-setup` → `环境配置`).
+- When adding a new tag, add it to the frontmatter first, then add a mapping entry in `tag-display.ts`. Tags without a mapping fall back to displaying the raw slug.
+- Three components call `getTagDisplayName()`: `PostMeta.astro`, `widget/Tags.astro`, `ArchivePanel.svelte`.
+- `src/utils/content-utils.ts` provides `getTagList()` (tag counts) and `getCategoryList()`.
 
 ### Markdown Extensions
 
@@ -116,6 +138,32 @@ All site-wide config lives in `src/config.ts`:
 ### Build Pipeline
 
 Astro builds to static HTML → Pagefind indexes the output in `dist/` for search. Deployed via Vercel.
+
+### Content Visibility
+
+Three frontmatter flags control visibility:
+- `draft: true` — excluded from all views in production (index, archive, tag filters, sitemap).
+- `hide: true` — hidden from the home page index, but still appears in archive, tag/category filters, and sitemap. Used for photo sets and hidden pages.
+- No flag — fully visible everywhere.
+
+`content-utils.ts` exposes two query functions: `getSortedPosts()` (home page, respects `hide`) and `getSortedPostsForArchive()` (archive, includes hidden).
+
+### Post Image Storage
+
+Images for a post live alongside the `.md` file or in subdirectories:
+```
+src/content/posts/
+├── my-post.md
+├── my-post/            # Images referenced as ./my-post/image.png
+│   └── image.png
+├── guide/
+│   ├── index.md
+│   └── cover.jpeg
+└── image/
+    └── conda/          # Shared images across posts
+```
+
+Posts can include raw `<style>` and `<script>` blocks (not frontmatter-wrapped) for per-post CSS/JS — used by photo posts (`P-*.md`).
 
 ## Development Notes
 

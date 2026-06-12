@@ -2,7 +2,7 @@
 title: vscode mac c++ 环境配置
 published: 2025-08-27
 description: 配置 vscode mac c++ 运行调试环境
-tags: [环境配置, vscode]
+tags: [vscode, cpp, macos, env-setup]
 category: 环境配置
 draft: false
 device: Windows

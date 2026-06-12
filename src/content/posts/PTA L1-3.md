@@ -2,7 +2,7 @@
 title: pta天梯赛l1刷题总结（三）15分题型
 published: 2025-02-26
 description: PTA 刷题记录-第三部分
-tags: [OI,]
+tags: [algorithm, pta, cpp, note]
 category: OI
 draft: false
 device: Windows

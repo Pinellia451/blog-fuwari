@@ -2,7 +2,7 @@
 title: 机器学习 环境配置
 published: 2025-10-28
 description: 如何在无root权限的服务器上进行初步环境配置？ conda 隔离一切
-tags: [conda, python,环境配置]
+tags: [conda, python, ml, linux, env-setup]
 category: 环境配置
 draft: false
 device: Windows

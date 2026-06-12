@@ -2,7 +2,7 @@
 title: leetcode刷题列表
 published: 2025-08-26
 description: 力扣文字刷题列表
-tags: [leetcode, OI]
+tags: [leetcode, algorithm, note]
 category: OI
 draft: false
 device: Windows

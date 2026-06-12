@@ -2,7 +2,7 @@
 title: 夹带私货--简单文件隐写
 published: 2025-08-20
 description: 使用cat以及binwalk进行简单的文件隐写，偷摸夹带私货
-tags: [explore]
+tags: [security, steganography, file]
 category: explore
 draft: false
 device: Windows

@@ -2,7 +2,7 @@
 title: PTA天梯赛L1刷题总结（二）10分题型
 published: 2025-02-26
 description: PTA 刷题记录-第二部分
-tags: [OI,]
+tags: [algorithm, pta, cpp, note]
 category: OI
 draft: false
 device: Windows

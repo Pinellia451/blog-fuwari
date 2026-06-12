@@ -1,7 +1,7 @@
 ---
 title: Draft Example
 published: 2022-07-01
-tags: [Markdown, Blogging, Demo]
+tags: [demo, markdown]
 category: Examples
 draft: true
 device: Windows
@@ -17,7 +17,7 @@ When the article is ready for publication, you can update the "draft" field to "
 ---
 title: Draft Example
 published: 2024-01-11T04:40:26.381Z
-tags: [Markdown, Blogging, Demo]
+tags: [demo, markdown]
 category: Examples
 draft: false
 ---

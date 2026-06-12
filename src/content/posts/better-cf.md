@@ -2,7 +2,7 @@
 title: cf加速实践
 published: 2025-08-20
 description: 尝试加速cf的服务国内访问，但失败
-tags: [Cloudflare]
+tags: [cloudflare, cdn, web]
 category: Cloudflare
 draft: false
 device: MacBook Pro

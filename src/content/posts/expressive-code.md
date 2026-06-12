@@ -2,7 +2,7 @@
 title: Expressive Code Example
 published: 2024-04-10
 description: How code blocks look in Markdown using Expressive Code.
-tags: [Markdown, Blogging, Demo]
+tags: [demo, markdown, expressive-code]
 category: Examples
 draft: false
 device: Windows

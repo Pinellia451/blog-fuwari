@@ -90,8 +90,8 @@ importers:
         specifier: ^5.4.4
         version: 5.4.4
       pnpm:
-        specifier: ^10.19.0
-        version: 10.33.0
+        specifier: ^9.14.4
+        version: 9.15.9
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
@@ -3974,8 +3974,8 @@ packages:
   pkg-types@2.1.0:
     resolution: {integrity: sha512-wmJwA+8ihJixSoHKxZJRBQG1oY8Yr9pGLzRmSsNms0iNWyHHAlZCa7mmKiFR10YPZuz/2k169JiS/inOjBCZ2A==}
 
-  pnpm@10.33.0:
-    resolution: {integrity: sha512-EFaLtKavtYyes2MNqQzJUWQXq+vT+rvmc58K55VyjaFJHp21pUTHatjrdXD1xLs9bGN7LLQb/c20f6gjyGSTGQ==, tarball: https://registry.npmmirror.com/pnpm/-/pnpm-10.33.0.tgz}
+  pnpm@9.15.9:
+    resolution: {integrity: sha512-aARhQYk8ZvrQHAeSMRKOmvuJ74fiaR1p5NQO7iKJiClf1GghgbrlW1hBjDolO95lpQXsfF+UA+zlzDzTfc8lMQ==, tarball: https://registry.npmmirror.com/pnpm/-/pnpm-9.15.9.tgz}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -9819,7 +9819,7 @@ snapshots:
       exsolve: 1.0.4
       pathe: 2.0.3
 
-  pnpm@10.33.0: {}
+  pnpm@9.15.9: {}
 
   possible-typed-array-names@1.1.0: {}
 

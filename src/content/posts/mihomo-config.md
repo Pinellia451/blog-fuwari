@@ -2,7 +2,7 @@
 title: mihomo 设置指南
 published: 2025-10-05
 description: 配置文件的补充说明
-tags: [环境配置,]
+tags: [mihomo, proxy, clash, env-setup]
 category: 环境配置
 draft: false
 device: Windows

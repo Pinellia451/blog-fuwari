@@ -4,6 +4,7 @@ import { onMount } from "svelte";
 import I18nKey from "../i18n/i18nKey";
 import { i18n } from "../i18n/translation";
 import { getPostUrlBySlug } from "../utils/url-utils";
+import { getTagDisplayName } from "../constants/tag-display";
 
 export let tags: string[];
 export let categories: string[];
@@ -38,7 +39,7 @@ function formatDate(date: Date) {
 }
 
 function formatTag(tagList: string[]) {
-	return tagList.map((t) => `#${t}`).join(" ");
+	return tagList.map((t) => `#${getTagDisplayName(t)}`).join(" ");
 }
 
 onMount(async () => {

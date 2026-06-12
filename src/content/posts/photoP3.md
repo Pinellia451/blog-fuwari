@@ -2,7 +2,7 @@
 title: 景深 虚化 动态模糊——光圈和快门对照片的影响
 published: 2025-01-31
 description: 摄影学习记录
-tags: [摄影,]
+tags: [photography, tutorial, camera]
 category: 摄影
 draft: false
 device: Windows
