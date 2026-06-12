@@ -6,6 +6,7 @@ tags: [linux, env-setup, micromamba, zsh, oh-my-zsh, p10k, shell]
 category: 环境配置
 draft: false
 device: Linux
+aigc: Claude Code
 ---
 
 ## 前言
@@ -194,7 +195,9 @@ groups                         # 查看所属组
 
 ### 3.2 创建个人工作目录
 
-根据共享存储的布局，建议建立标准化的个人目录结构：
+根据共享存储的布局，建议建立标准化的个人目录结构。
+
+> 这样做的目的是将自己的文件（代码、数据、模型、产出）存放在**干净的独立目录**中，与 `~/.cache`、shell 配置文件、micromamba 环境等系统/工具生成的文件彻底分离。这样无论是备份、迁移还是清理缓存，都不会误伤自己的数据。
 
 ```
 /share/<group_name>/<username>/
@@ -225,14 +228,10 @@ mkdir -p ~/Projects/work1
 
 ### 4.1 基础 Python 环境
 
-创建两个通用 Python 3.10 环境，分别承担不同职责：
+创建一个通用 Python 3.10 环境：
 
 ```bash
-# 通用 Python 运行环境
 micromamba create -n py10 python=3.10
-
-# 模型下载与外部资源同步环境
-micromamba create -n hf-dl python=3.10
 ```
 
 ### 4.2 环境管理常用命令
@@ -286,6 +285,67 @@ micromamba run -n py10 python -m pip config list
 
 ---
 
+## 7. 配置 Git 提交模板
+
+在服务器上进行开发时，经常需要提交代码。配置一个标准化的提交信息模板可以让每次 `git commit` 时都有结构化的提示，避免遗漏关键信息。
+
+### 7.1 创建模板文件
+
+```bash
+cat > ~/.git-commit-template.txt << 'EOF'
+
+**note:**
+-
+
+---
+**todo:**
+- []
+---
+**fixed:**
+- []
+
+EOF
+```
+
+模板分为三个区域：
+
+| 区域 | 用途 |
+|------|------|
+| `**note:**` | 备注说明、背景信息、相关上下文 |
+| `**todo:**` | 待完成的待办项，使用 `- []` 标记 |
+| `**fixed:**` | 本次提交修复的问题或完成的事项 |
+
+### 7.2 配置 Git 使用模板
+
+```bash
+git config --global commit.template ~/.git-commit-template.txt
+```
+
+> [!TIP]
+> 如果希望只对特定项目生效，去掉 `--global`，在对应仓库目录下执行 `git config commit.template ~/.git-commit-template.txt` 即可。
+
+### 7.3 效果
+
+配置完成后，每次执行 `git commit`（不带 `-m`）时，编辑器会自动打开并预填充模板：
+
+```
+
+**note:**
+-
+
+---
+**todo:**
+- []
+---
+**fixed:**
+- []
+
+```
+
+只需在对应位置填写内容即可。使用 `-m` 参数时模板不会生效，适用于简单的一次性提交。
+
+---
+
 ## 初始化结果确认
 
 完成以上步骤后，你的服务器环境应具备以下能力：
@@ -294,7 +354,8 @@ micromamba run -n py10 python -m pip config list
 - [x] `zsh` 已编译安装并设为默认登录 shell
 - [x] 个人共享目录与标准子目录结构已建立
 - [x] 项目工作区已创建
-- [x] Python 3.10 环境（`py10`、`hf-dl`）已创建
+- [x] Python 3.10 环境（`py10`）已创建
 - [x] pip 已配置清华镜像源
+- [x] Git 提交模板已配置（note/todo/fixed 三段式）
 
 这套环境可以支撑后续的数据集管理、模型下载、实验脚本开发等工作，且不依赖系统级权限。
