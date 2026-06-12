@@ -39,6 +39,7 @@ export const tagDisplayMap: Record<string, string> = {
 
   // ── 工具 / 工程化 ──
   tooling: "工程化",
+  "claude-code": "Claude Code",
 
   // ── 大小写修正（英文工具名保持原样，仅纠正拼写） ──
   cpp: "C++",
