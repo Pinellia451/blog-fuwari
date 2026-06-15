@@ -21,7 +21,8 @@ const config = profileConfig;
     <div class="px-2">
         <div class="font-bold text-xl text-center mb-1 dark:text-neutral-50 transition">{config.name}</div>
         <div class="h-1 w-5 bg-[var(--primary)] mx-auto rounded-full mb-2 transition"></div>
-        <div class="text-center text-neutral-400 mb-2.5 transition">{config.bio}</div>
+        <div id="hitokoto-bio" class="text-center text-neutral-400 mb-2.5 transition">{config.bio}</div>
+        <div id="hitokoto-source" class="text-center text-neutral-400/60 text-xs mb-2.5 transition hidden"></div>
         <div class="flex gap-2 justify-center mb-1">
             {config.links.length > 1 && config.links.map(item =>
                     <a rel="me" aria-label={item.name} href={item.url} target="_blank" class="btn-regular rounded-lg h-10 w-10 active:scale-90">
@@ -36,4 +37,25 @@ const config = profileConfig;
         </div>
     </div>
 </div>
+
+<script>
+    const bioEl = document.getElementById('hitokoto-bio');
+    const sourceEl = document.getElementById('hitokoto-source');
+
+    if (bioEl && sourceEl) {
+        fetch('https://v1.hitokoto.cn/?c=i&encode=json')
+            .then(res => res.json())
+            .then(data => {
+                if (data.hitokoto) {
+                    bioEl.textContent = `「${data.hitokoto}」`;
+                    const parts = [data.from_who, data.from].filter(Boolean);
+                    if (parts.length > 0) {
+                        sourceEl.textContent = `—— ${parts.join(' · ')}`;
+                        sourceEl.classList.remove('hidden');
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+</script>
 
