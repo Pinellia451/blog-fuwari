@@ -1,9 +1,9 @@
 ---
-title: leetcode刷题列表
+title: LeetCode 刷题列表
 published: 2025-08-26
-description: 力扣文字刷题列表
+description: 整理 LeetCode 刷题记录与题解索引，便于按题目和知识点持续复盘。
 tags: [leetcode, algorithm, note]
-category: OI
+category: 编程与算法
 draft: false
 device: Windows
 ---

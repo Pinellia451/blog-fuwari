@@ -1,9 +1,9 @@
 ---
-title: 机器学习 环境配置
+title: 机器学习环境配置
 published: 2025-10-28
-description: 如何在无root权限的服务器上进行初步环境配置？ conda 隔离一切
+description: 在无 root 权限的服务器上使用 micromamba 配置隔离、轻量且可复现的机器学习环境。
 tags: [conda, python, ml, linux, env-setup]
-category: 环境配置
+category: 环境与系统
 draft: false
 device: Windows
 ---

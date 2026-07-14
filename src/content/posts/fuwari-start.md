@@ -1,7 +1,7 @@
 ---
 title: 从这里开始
 published: 2024-05-01
-description: 简单模板
+description: 用于记录 Fuwari 博客基础配置与使用方式的草稿模板。
 tags: [demo, markdown]
 category: module
 draft: true

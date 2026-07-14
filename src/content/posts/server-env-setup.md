@@ -3,7 +3,7 @@ title: 服务器环境配置指南
 published: 2026-06-12
 description: 在无 root 权限的 Linux 服务器上，从零搭建完整的命令行与 Python 开发环境，包含 zsh 编译、micromamba 部署、Python 环境创建与镜像配置
 tags: [linux, env-setup, micromamba, zsh, oh-my-zsh, p10k, shell]
-category: 环境配置
+category: 环境与系统
 draft: false
 device: Linux
 aigc: Claude Code

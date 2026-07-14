@@ -1,7 +1,7 @@
 ---
-title: 景深 虚化 动态模糊——光圈和快门对照片的影响
+title: 景深、虚化与动态模糊：光圈和快门对照片的影响
 published: 2025-01-31
-description: 摄影学习记录
+description: 结合拍摄示例理解光圈、快门、景深、背景虚化与动态模糊之间的关系。
 tags: [photography, tutorial, camera]
 category: 摄影
 draft: false

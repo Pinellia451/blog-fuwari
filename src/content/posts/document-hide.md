@@ -1,9 +1,9 @@
 ---
-title: 夹带私货--简单文件隐写
+title: 夹带私货：简单文件隐写
 published: 2025-08-20
-description: 使用cat以及binwalk进行简单的文件隐写，偷摸夹带私货
+description: 使用 cat 拼接文件，并通过 binwalk 检测和提取隐藏内容，演示一种简单的文件隐写方法。
 tags: [security, steganography, file]
-category: explore
+category: Web 与工具
 draft: false
 device: Windows
 ---

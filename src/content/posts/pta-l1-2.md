@@ -1,9 +1,9 @@
 ---
-title: PTA天梯赛L1刷题总结（二）10分题型
+title: PTA 天梯赛 L1 刷题总结（二）：10 分题型
 published: 2025-02-26
-description: PTA 刷题记录-第二部分
+description: 总结 PTA 天梯赛 L1 阶段常见的 10 分题型、输入输出规律与精简代码思路。
 tags: [algorithm, pta, cpp, note]
-category: OI
+category: 编程与算法
 draft: false
 device: Windows
 ---

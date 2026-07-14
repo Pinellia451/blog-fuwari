@@ -1,7 +1,7 @@
 ---
-title: 251003_人像
+title: 2025-10-03 人像摄影集
 published: 2025-10-03
-description: 照片集
+description: 收录 2025 年 10 月 3 日拍摄的人像作品，记录自然光线与现场氛围。
 tags: [photography, photo-set]
 category: 摄影
 draft: false

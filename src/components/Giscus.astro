@@ -4,16 +4,14 @@
 import { giscusConfig } from "../config";
 
 interface Props {
-    class?: string;
+	class?: string;
 }
 
-const {
-    class: className = ""
-} = Astro.props;
+const { class: className = "" } = Astro.props;
 
 // 如果 Giscus 未启用，不渲染组件
 if (!giscusConfig.enable) {
-    return null;
+	return null;
 }
 
 const { repo, repoId, category, categoryId, mapping, lang } = giscusConfig;

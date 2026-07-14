@@ -24,9 +24,8 @@ async function getRawSortedPostsForHome() {
 		// 在生产环境中过滤掉草稿和隐藏的帖子，在开发环境中只过滤隐藏的帖子
 		if (import.meta.env.PROD) {
 			return data.draft !== true && data.hide !== true;
-		} else {
-			return data.hide !== true;
 		}
+		return data.hide !== true;
 	});
 
 	const sorted = allBlogPosts.sort((a, b) => {

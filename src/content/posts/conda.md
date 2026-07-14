@@ -3,7 +3,7 @@ title: Python 环境配置
 published: 2025-08-08
 description: 怎样配置 Python 环境？推荐使用 Miniconda
 tags: [conda, python, env-setup]
-category: 环境配置
+category: 环境与系统
 draft: false
 device: Windows
 ---

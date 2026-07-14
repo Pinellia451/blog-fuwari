@@ -1,1 +1,24 @@
-{}
+{
+	"redirects": [
+		{
+			"source": "/posts/mechine-learning-env/",
+			"destination": "/posts/machine-learning-env/",
+			"permanent": true
+		},
+		{
+			"source": "/posts/photop3/",
+			"destination": "/posts/photography-aperture-shutter/",
+			"permanent": true
+		},
+		{
+			"source": "/posts/p-251003/",
+			"destination": "/posts/photo-2025-10-03/",
+			"permanent": true
+		},
+		{
+			"source": "/posts/p-251003-1/",
+			"destination": "/posts/photo-2025-10-03-portrait/",
+			"permanent": true
+		}
+	]
+}

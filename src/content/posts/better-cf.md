@@ -1,9 +1,9 @@
 ---
-title: cf加速实践
+title: Cloudflare 加速实践
 published: 2025-08-20
-description: 尝试加速cf的服务国内访问，但失败
+description: 记录一次改善 Cloudflare 服务国内访问速度的实践、测试过程与未达预期的原因。
 tags: [cloudflare, cdn, web]
-category: Cloudflare
+category: Web 与工具
 draft: false
 device: MacBook Pro
 ---

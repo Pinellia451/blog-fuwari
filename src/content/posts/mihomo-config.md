@@ -1,9 +1,9 @@
 ---
-title: mihomo 设置指南
+title: Mihomo 设置指南
 published: 2025-10-05
-description: 配置文件的补充说明
+description: 整理 Mihomo 在 Android 等场景下的配置补充、模块设置与常见注意事项。
 tags: [mihomo, proxy, clash, env-setup]
-category: 环境配置
+category: 环境与系统
 draft: false
 device: Windows
 ---

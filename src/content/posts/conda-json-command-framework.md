@@ -3,7 +3,7 @@ title: Zsh 中的 Conda 自定义命令框架
 published: 2026-04-16
 description: 通过 JSON 注册表 + 通用分发器 + 独立函数实现，构建可扩展、可维护的 conda/micromamba 自定义命令框架。
 tags: [zsh, conda, micromamba, shell, tooling]
-category: 环境配置
+category: 环境与系统
 aigc: Cursor
 device: MacBook Pro
 draft: false

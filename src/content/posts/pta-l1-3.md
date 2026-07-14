@@ -1,9 +1,9 @@
 ---
-title: pta天梯赛l1刷题总结（三）15分题型
+title: PTA 天梯赛 L1 刷题总结（三）：15 分题型
 published: 2025-02-26
-description: PTA 刷题记录-第三部分
+description: 按知识点整理 PTA 天梯赛 L1 阶段常见的 15 分题型与对应解题方法。
 tags: [algorithm, pta, cpp, note]
-category: OI
+category: 编程与算法
 draft: false
 device: Windows
 ---

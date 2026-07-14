@@ -3,7 +3,7 @@ title: Claude Code 斜杠命令完全指南
 published: 2026-06-12
 description: 全面介绍 Claude Code CLI 中所有 / 斜杠命令的用途、用法与实战技巧，帮助你高效驾驭终端中的 AI 编程助手
 tags: [guide, claude-code, tooling]
-category: 工具指南
+category: Web 与工具
 draft: false
 aigc: Claude Code
 device: MacBook Pro
