@@ -3,6 +3,15 @@
         @apply text-3xl;
     }
 
+    h2.post-content-h1 {
+        color: var(--tw-prose-headings);
+        font-size: 1.875rem;
+        font-weight: 800;
+        line-height: 2.25rem;
+        margin-top: 0;
+        margin-bottom: 0.8888889em;
+    }
+
     h1, h2, h3, h4, h5, h6 {
         .anchor {
             @apply transition -m-0.5 ml-[0.2ch] p-0.5 select-none opacity-0 no-underline !important;
