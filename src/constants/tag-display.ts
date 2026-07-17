@@ -46,6 +46,8 @@ export const tagDisplayMap: Record<string, string> = {
 	python: "Python",
 	markdown: "Markdown",
 	macos: "macOS",
+	ntfs: "NTFS",
+	storage: "磁盘存储",
 	vscode: "VS Code",
 	shell: "Shell",
 	ml: "机器学习",
