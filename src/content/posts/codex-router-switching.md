@@ -1,14 +1,16 @@
 ---
-title: Codex 官方模型与 AiMaMi 智能路由切换指南
+title: 远程服务器 Codex 使用本地 AiMaMi 中转服务指南
 published: 2026-07-18
-description: 使用 Codex Profile 或 Shell 脚本，在官方模型与 AiMaMi 智能路由之间安全切换，并通过 SSH 反向隧道连接远端环境。
+description: 在远程服务器配置 Codex，通过 SSH 反向隧道使用本地 AiMaMi 中转服务，并在官方模型与智能路由之间安全切换。
 tags: [codex, ai, shell, ssh, tooling]
 category: 环境与系统
 draft: false
 aigc: Codex
 ---
 
-在 Codex 中接入自定义模型提供方后，一个很常见的需求是：平时使用官方模型，需要时切换到本地中转或智能路由，而且不希望每次都手工修改 `~/.codex/config.toml`。
+我的实际场景是：Codex 运行在远程服务器上，而 AiMaMi 中转服务运行在本地电脑。为了让服务器上的 Codex 使用本地中转，需要先通过 SSH 反向隧道连接两端，再在服务器上配置 Provider 和模型切换方式。
+
+完成后，远程服务器上的 Codex 既可以使用官方模型，也可以按需切换到本地 AiMaMi 智能路由，不必每次手工修改 `~/.codex/config.toml`。
 
 本文以 AiMaMi 智能路由为例，整理两条可落地的路线：
 
@@ -53,7 +55,7 @@ supports_websockets = false
 > [!IMPORTANT]
 > `config.toml` 是 TOML 文件，不是 Shell 脚本。`model_catalog_json = "$HOME/..."` 或 `model_catalog_json = "$CODEX_HOME/..."` 通常不会展开环境变量，应填写真实绝对路径。
 
-## 建立 SSH 反向转发
+## 在本机单独运行 SSH 反向转发
 
 在服务器上的 Codex 访问本地 AiMaMi 路由之前，需要把服务器的 `127.0.0.1:25123` 反向转发到本机的 `127.0.0.1:25817`：
 
@@ -65,11 +67,7 @@ SSH 反向隧道
 本机 AiMaMi：127.0.0.1:25817
 ```
 
-以下两种配置方式二选一即可。
-
-### 直接执行 SSH 命令
-
-在运行 AiMaMi 的本机执行：
+当前环境无法依赖 SSH Config 自动建立这条转发，因此更推荐在运行 AiMaMi 的本机单独打开一个终端，直接执行：
 
 ```bash
 ssh -N -R 127.0.0.1:25123:127.0.0.1:25817 服务器
@@ -83,27 +81,10 @@ ssh -N -R 127.0.0.1:25123:127.0.0.1:25817 服务器
 - `127.0.0.1:25817`：本机 AiMaMi 服务地址；
 - `服务器`：SSH 主机名、别名或 `user@host`。
 
-该命令需要保持运行。终端断开或 SSH 进程退出后，转发也会消失。
+这个终端只负责维持隧道，不要关闭，也不需要在其中执行其他命令。终端断开或 SSH 进程退出后，反向转发会立即失效；此时服务器上的 Codex 也就无法继续访问本地 AiMaMi。需要恢复时，重新打开一个终端并再次运行该命令即可。
 
-### 写入 SSH Config
-
-也可以把转发规则持久化到本机的 `~/.ssh/config`：
-
-```text
-Host codex-relay-server
-    HostName 服务器地址
-    User 登录用户名
-    RemoteForward 127.0.0.1:25123 127.0.0.1:25817
-    ExitOnForwardFailure yes
-    ServerAliveInterval 30
-    ServerAliveCountMax 3
-```
-
-然后执行：
-
-```bash
-ssh -N codex-relay-server
-```
+> [!NOTE]
+> 我当前无法通过 `~/.ssh/config` 中的 `RemoteForward` 正常使用这条隧道，所以本文不再把 SSH Config 作为可用方案。主机地址、用户名、密钥等常规连接信息仍可由 SSH Config 提供，但反向转发本身使用命令行中的 `-R` 显式创建。
 
 如果服务器上的 AiMaMi Provider 通过该反向隧道连接本机，对应地址应使用：
 
