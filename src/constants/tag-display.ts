@@ -43,6 +43,10 @@ export const tagDisplayMap: Record<string, string> = {
 	codex: "Codex",
 	ai: "AI",
 	ssh: "SSH",
+	android: "Android",
+	kotlin: "Kotlin",
+	gradle: "Gradle",
+	adb: "ADB",
 
 	// ── 大小写修正（英文工具名保持原样，仅纠正拼写） ──
 	cpp: "C++",
