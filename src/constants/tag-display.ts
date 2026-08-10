@@ -36,6 +36,10 @@ export const tagDisplayMap: Record<string, string> = {
 	cloudflare: "Cloudflare",
 	proxy: "代理",
 	clash: "Clash",
+	"mobile-network": "移动网络",
+	esim: "eSIM",
+	voxi: "VOXI",
+	giffgaff: "giffgaff",
 
 	// ── 工具 / 工程化 ──
 	tooling: "工程化",
