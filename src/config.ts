@@ -85,6 +85,11 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa6-brands:github",
 			url: "https://github.com/Pinellia451",
 		},
+		{
+			name: "GPG Public Key",
+			icon: "fa6-solid:key",
+			url: "/gpg.asc",
+		},
 	],
 };
 
