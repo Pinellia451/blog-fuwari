@@ -29,6 +29,9 @@ export const tagDisplayMap: Record<string, string> = {
 	security: "安全",
 	steganography: "文件隐写",
 	file: "文件",
+	openpgp: "OpenPGP",
+	yubikey: "YubiKey",
+	gnupg: "GnuPG",
 
 	// ── Web / 网络 ──
 	web: "Web",
@@ -47,6 +50,9 @@ export const tagDisplayMap: Record<string, string> = {
 	codex: "Codex",
 	ai: "AI",
 	ssh: "SSH",
+	sftp: "SFTP",
+	rclone: "rclone",
+	fuse: "FUSE",
 	android: "Android",
 	kotlin: "Kotlin",
 	gradle: "Gradle",
@@ -55,6 +61,7 @@ export const tagDisplayMap: Record<string, string> = {
 	// ── 大小写修正（英文工具名保持原样，仅纠正拼写） ──
 	cpp: "C++",
 	python: "Python",
+	micromamba: "micromamba",
 	markdown: "Markdown",
 	macos: "macOS",
 	ntfs: "NTFS",

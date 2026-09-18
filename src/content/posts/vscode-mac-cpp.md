@@ -7,14 +7,21 @@ category: 环境与系统
 draft: false
 device: Windows
 ---
-# 使用的插件
+这套配置用于在 macOS 的 VS Code 中编译、运行和调试单文件 C++ 程序。编译器使用系统 Clang，调试器使用 LLDB。
 
-C++系列，code runner
+## 扩展
 
-# 配置文件
+安装以下扩展：
 
-1. tasks/launch 文件用来完善f5调试
-2. settings 文件主要用来完善cpp代码万能头，以及 code runner 运行参数
+- C/C++ 语言支持；
+- CodeLLDB；
+- Code Runner（仅用于快速运行，不代替调试配置）。
+
+## 配置文件
+
+- `tasks.json` 定义编译任务；
+- `launch.json` 定义 F5 调试入口；
+- `settings.json` 配置头文件关联和 Code Runner 参数。
 
 ```json
 <!-- launch.json -->

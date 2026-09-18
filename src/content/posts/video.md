@@ -1,13 +1,13 @@
 ---
-title: Include Video in the Posts
+title: 在文章中嵌入视频
 published: 2023-08-01
-description: This post demonstrates how to include embedded video in a blog post.
+description: 展示在 Markdown 文章中嵌入 YouTube、哔哩哔哩和 m3u8 播放器的方法。
 tags: [demo, video]
 category: Examples
 draft: true
 device: Windows
 ---
-Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.
+Astro 的 Markdown 内容可以直接使用 HTML，因此可以粘贴视频平台提供的嵌入代码。发布前应确认来源可信，并为 iframe 设置明确尺寸和 `allowfullscreen`。
 
 ```yaml
 ---

@@ -1,13 +1,13 @@
 ---
-title: Expressive Code Example
+title: Expressive Code 效果示例
 published: 2024-04-10
-description: How code blocks look in Markdown using Expressive Code.
+description: 展示 Expressive Code 的语法高亮、编辑器框架、行标记、折行、折叠和行号效果。
 tags: [demo, markdown, expressive-code]
 category: Examples
 draft: true
 device: Windows
 ---
-Here, we'll explore how code blocks look using [Expressive Code](https://expressive-code.com/). The provided examples are based on the official documentation, which you can refer to for further details.
+本页集中展示 [Expressive Code](https://expressive-code.com/) 的渲染效果，用于调整主题或插件后回归检查。示例保留官方语法，便于与文档逐项对照。
 
 ## Expressive Code
 

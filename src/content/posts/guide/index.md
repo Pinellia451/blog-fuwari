@@ -1,7 +1,7 @@
 ---
-title: Simple Guides for Fuwari
+title: Fuwari 文章编写指南
 published: 2024-04-01
-description: "How to use this blog template."
+description: "说明 Fuwari 文章 frontmatter、文件位置和资源组织方式。"
 image: "./cover.jpeg"
 tags: [demo, astro, guide]
 category: Guides
@@ -10,9 +10,9 @@ device: Windows
 ---
 > Cover image source: [Source](https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/208fc754-890d-4adb-9753-2c963332675d/width=2048/01651-1456859105-(colour_1.5),girl,_Blue,yellow,green,cyan,purple,red,pink,_best,8k,UHD,masterpiece,male%20focus,%201boy,gloves,%20ponytail,%20long%20hair,.jpeg)
 
-This blog template is built with [Astro](https://astro.build/). For the things that are not mentioned in this guide, you may find the answers in the [Astro Docs](https://docs.astro.build/).
+这个博客基于 [Astro](https://astro.build/) 构建。本页只记录项目特有的文章约定；通用功能以 [Astro 文档](https://docs.astro.build/) 为准。
 
-## Front-matter of Posts
+## 文章 frontmatter
 
 ```yaml
 ---
@@ -36,9 +36,9 @@ draft: false
 | `category`    | The category of the post.                                                                                                                                                                                                       |
 | `draft`       | If this post is still a draft, which won't be displayed.                                                                                                                                                                        |
 
-## Where to Place the Post Files
+## 文件位置
 
-Your post files should be placed in `src/content/posts/` directory. You can also create sub-directories to better organize your posts and assets.
+文章放在 `src/content/posts/` 中。需要把封面或正文图片与文章放在一起时，可以为文章建立独立子目录。
 
 ```
 src/content/posts/

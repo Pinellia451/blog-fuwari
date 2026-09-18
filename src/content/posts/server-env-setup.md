@@ -1,17 +1,16 @@
 ---
 title: 服务器环境配置指南
 published: 2026-06-12
-description: 在无 root 权限的 Linux 服务器上，从零搭建完整的命令行与 Python 开发环境，包含 zsh 编译、micromamba 部署、Python 环境创建与镜像配置
-tags: [linux, env-setup, micromamba, zsh, oh-my-zsh, p10k, shell]
+updated: 2026-09-17
+description: 在无 root 权限的 Linux 服务器上，从零搭建命令行与 Python 开发环境，并使用 rclone 将本机 SFTP 目录挂载为普通目录。
+tags: [linux, env-setup, micromamba, zsh, oh-my-zsh, p10k, shell, rclone, sftp, fuse]
 category: 环境与系统
 draft: false
 device: Linux
 aigc: Claude Code
 ---
 
-## 前言
-
-本文记录在一台无 root 权限的 Linux 服务器上，完成基础开发环境初始化的完整流程。目标是从裸机状态搭建出一套可用、稳定的命令行交互与 Python 开发环境。
+这套流程用于初始化没有 root 权限的 Linux 服务器。目标是在用户目录中完成 Shell、Python、项目目录和远程文件挂载配置，不依赖系统管理员安装软件。
 
 主要内容包括：
 
@@ -19,6 +18,7 @@ aigc: Claude Code
 - `oh-my-zsh` 配置与 `Powerlevel10k` 主题
 - `micromamba` 部署与初始化
 - 个人共享目录与项目工作区建立
+- 使用 `rclone` 将本机 SFTP 目录挂载为 FUSE 目录
 - Python 环境创建
 - pip 国内镜像配置
 
@@ -207,10 +207,12 @@ groups                         # 查看所属组
 └── Projects/     # 项目工作区
 ```
 
-创建命令：
+创建命令（按实际情况修改组名）：
 
 ```bash
-SHARE_BASE="/share/liurui_group/niuhongkai"
+GROUP_NAME="your-group"
+USER_NAME="${USER:?当前 shell 未设置 USER}"
+SHARE_BASE="/share/${GROUP_NAME}/${USER_NAME}"
 mkdir -p "${SHARE_BASE}"/{Datasets,Models,Outputs,Projects}
 ```
 
@@ -221,6 +223,104 @@ mkdir -p ~/Projects/work1
 ```
 
 建议将工作区与共享目录配合使用，项目产出可以软链接或直接存放到共享目录中，便于团队协作。
+
+### 3.4 使用 rclone 挂载本机 SFTP 目录
+
+有些程序不能正确跟随符号链接，或者要求目标必须表现为普通目录。此时可以让 `rclone` 通过本机的 SSH/SFTP 读取实际工作目录，再将它挂载到另一个位置。程序看到的是一个普通的 FUSE 目录，而不是符号链接。
+
+这样做的主要目的是把当前希望通过网页查看的内容统一挂载到一个固定目录，再由 OpenList 等外部服务挂载并提供网页浏览，而不必移动或复制原始文件。
+
+以下示例假设服务器的目录结构为：
+
+```text
+/sdc/home/<username>/<username>/
+├── ai-workspace/w1/  # 实际目录
+└── Pan/w1/           # FUSE 挂载点
+```
+
+示例中的用户名从 `$USER` 获取，不需要在命令或文章中写入真实账号。
+
+#### 前置条件
+
+此方案不需要 root 权限，但需要：
+
+- `$HOME/bin/rclone` 已安装且可执行；
+- 系统提供 `fusermount3`；
+- 本机 `sshd` 正在运行；
+- `~/.ssh/id_ed25519` 可以免密登录 `localhost`；
+- 挂载点存在且为空。
+
+可以先验证依赖和本机 SSH：
+
+```bash
+command -v "$HOME/bin/rclone"
+command -v fusermount3
+ssh -i "$HOME/.ssh/id_ed25519" localhost true
+```
+
+#### 定义脱敏路径变量
+
+```bash
+USER_NAME="${USER:?当前 shell 未设置 USER}"
+USER_ROOT="/sdc/home/${USER_NAME}/${USER_NAME}"
+SOURCE_DIR="${USER_ROOT}/ai-workspace/w1"
+MOUNT_DIR="${USER_ROOT}/Pan/w1"
+```
+
+先确认实际目录存在，再创建空挂载点：
+
+```bash
+test -d "$SOURCE_DIR"
+mkdir -p "$MOUNT_DIR"
+
+if [ -n "$(find "$MOUNT_DIR" -mindepth 1 -maxdepth 1 -print -quit)" ]; then
+  echo "挂载点非空：$MOUNT_DIR" >&2
+  exit 1
+fi
+```
+
+#### 执行挂载
+
+`rclone` 的按需 SFTP remote 使用双斜杠表示远端绝对路径。下面先移除 `SOURCE_DIR` 开头的 `/`，再显式拼接 `//`：
+
+```bash
+REMOTE=":sftp,host=localhost,user=${USER_NAME},key_file=${HOME}/.ssh/id_ed25519,known_hosts_file=none://${SOURCE_DIR#/}"
+LOG_FILE="$(dirname "$MOUNT_DIR")/.rclone-w1.log"
+
+"$HOME/bin/rclone" mount "$REMOTE" "$MOUNT_DIR" \
+  --daemon \
+  --vfs-cache-mode writes \
+  --log-file "$LOG_FILE" \
+  --log-level INFO
+```
+
+这里的 `known_hosts_file=none` 会跳过 localhost 的主机密钥校验，仅适合明确连接本机回环 SSH 的场景。如果改为连接其他主机，应配置并校验 `known_hosts`，不要沿用这个选项。
+
+检查挂载是否成功：
+
+```bash
+mountpoint "$MOUNT_DIR"
+findmnt -T "$MOUNT_DIR"
+```
+
+成功后，访问 `Pan/w1` 实际会通过本机 SFTP 读写 `ai-workspace/w1`。
+
+#### 卸载
+
+正常卸载：
+
+```bash
+fusermount3 -u "$MOUNT_DIR"
+```
+
+如果提示设备忙，先关闭终端、编辑器、训练任务等正在访问该目录的程序，再重新卸载。必要时可以延迟卸载：
+
+```bash
+fusermount3 -uz "$MOUNT_DIR"
+```
+
+> [!WARNING]
+> 挂载期间不要删除或移动 `w1` 挂载点。服务器重启后 FUSE 挂载会失效，需要重新执行挂载命令；若要长期使用，可以后续再封装为登录脚本或用户级服务。
 
 ---
 
@@ -348,7 +448,7 @@ git config --global commit.template ~/.git-commit-template.txt
 
 ## 初始化结果确认
 
-完成以上步骤后，你的服务器环境应具备以下能力：
+逐项执行以下检查，确认初始化结果：
 
 - [x] 用户态 `micromamba` 已安装，可管理 Python 环境
 - [x] `zsh` 已编译安装并设为默认登录 shell
@@ -358,4 +458,4 @@ git config --global commit.template ~/.git-commit-template.txt
 - [x] pip 已配置清华镜像源
 - [x] Git 提交模板已配置（note/todo/fixed 三段式）
 
-这套环境可以支撑后续的数据集管理、模型下载、实验脚本开发等工作，且不依赖系统级权限。
+这些项目全部通过后，环境即可用于数据集管理、模型下载和实验脚本开发。后续升级仍应保持工具安装在用户目录中，避免与系统包管理器混用。

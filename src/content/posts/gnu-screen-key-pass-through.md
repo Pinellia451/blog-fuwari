@@ -8,8 +8,6 @@ draft: false
 device: Linux
 ---
 
-## 需求背景
-
 GNU Screen 默认使用 `Ctrl+A` 作为命令前缀。因此，进入 Screen 后，很多以 `Ctrl+A` 开头的按键序列会被 Screen 截获，例如：
 
 - `Ctrl+A C`：创建窗口
@@ -267,9 +265,9 @@ escape \377\377
 bindkey "\001\004" detach
 ```
 
-## 总结
+## 最终结果
 
-最终方案不是逐个解除 Screen 的默认快捷键，而是：
+这套方案不逐个解除 Screen 的默认快捷键，而是：
 
 1. 将 Screen 自身命令前缀从 `Ctrl+A` 移到通常不会由键盘产生的 `0xff`；
 2. 使用 `bindkey` 仅识别 `Ctrl+A Ctrl+D`；

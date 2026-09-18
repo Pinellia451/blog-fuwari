@@ -1,7 +1,7 @@
 ---
 title: macOS 读写 NTFS 移动硬盘：从只读 FSKit 到 macFUSE
 published: 2026-07-17
-description: 记录在 macOS 上识别只读 NTFS 分区，并通过 macFUSE 与 NTFS-3G 将移动硬盘手动挂载为可写模式的完整流程。
+description: 在 macOS 上识别只读 NTFS 分区，并通过 macFUSE 与 NTFS-3G 将移动硬盘手动挂载为可写模式。
 tags: [macos, ntfs, storage, env-setup]
 category: 环境与系统
 draft: false
@@ -139,7 +139,7 @@ mount | grep '/Desktop/md1'
 本机重新挂载后的结果为：
 
 ```text
-/dev/disk8s1 on /Users/nhk/Desktop/md1 (macfuse, local, synchronous, noatime, nobrowse)
+/dev/disk8s1 on /Users/<username>/Desktop/md1 (macfuse, local, synchronous, noatime, nobrowse)
 ```
 
 初始状态中的 `read-only` 已经消失，并且文件系统类型变成了 `macfuse`。最后创建一个临时文件，验证真实写入：
@@ -220,7 +220,7 @@ chkdsk X: /f
 
 NTFS-3G + macFUSE 适合临时兼容已有的 NTFS 硬盘，但性能、系统升级兼容性和异常断电后的恢复能力都需要谨慎对待。重要数据应保留备份；需要长期高频写入时，可以考虑成熟的商业 NTFS 驱动。若硬盘可以重新格式化且主要在 Windows 与 macOS 间交换文件，exFAT 往往更省心，但格式化前必须先备份全部数据。
 
-## 小结
+## 操作结论
 
 这次操作的状态变化可以概括为：
 
@@ -236,7 +236,7 @@ NTFS-3G + macFUSE 可写挂载
 
 ## 参考资料
 
-- [怎样在苹果电脑上用移动硬盘（使用 NTFS 格式硬盘）？](https://zhuanlan.zhihu.com/p/82665550)——原文测试于 macOS 10.13.6，提供了“卸载后重新挂载”的基本思路。
+- [怎样在苹果电脑上用移动硬盘（使用 NTFS 格式硬盘）？](https://zhuanlan.zhihu.com/p/82665550)：原文测试于 macOS 10.13.6，提供了“卸载后重新挂载”的基本思路。
 - [macFUSE](https://github.com/macfuse/macfuse)
 - [NTFS-3G](https://github.com/tuxera/ntfs-3g)
 - [gromgit/homebrew-fuse](https://github.com/gromgit/homebrew-fuse)

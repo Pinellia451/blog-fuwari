@@ -1,29 +1,31 @@
 ---
-title: Markdown Extended Features
+title: Markdown 扩展功能示例
 published: 2024-05-01
 updated: 2024-11-29
-description: 'Read more about Markdown features in Fuwari'
+description: '展示 Fuwari 支持的 GitHub 仓库卡片和提示块语法。'
 image: ''
 tags: [demo, markdown]
 category: 'Examples'
 draft: true
 device: Windows
 ---
-## GitHub Repository Cards
+本页用于验证 Fuwari 的 Markdown 扩展语法。修改 remark 或 rehype 插件后，可以通过这里检查仓库卡片和提示块是否仍能正确渲染。
 
-You can add dynamic cards that link to GitHub repositories, on page load, the repository information is pulled from the GitHub API.
+## GitHub 仓库卡片
+
+仓库卡片会链接到对应的 GitHub 项目，并在页面加载时读取公开仓库信息。
 
 ::github{repo="Fabrizz/MMM-OnSpotify"}
 
-Create a GitHub repository card with the code `::github{repo="<owner>/<repo>"}`.
+使用 `::github{repo="<owner>/<repo>"}` 插入仓库卡片。
 
 ```markdown
 ::github{repo="saicaca/fuwari"}
 ```
 
-## Admonitions
+## 提示块
 
-Following types of admonitions are supported: `note` `tip` `important` `warning` `caution`
+支持 `note`、`tip`、`important`、`warning` 和 `caution` 五种类型。
 
 :::note
 Highlights information that users should take into account, even when skimming.

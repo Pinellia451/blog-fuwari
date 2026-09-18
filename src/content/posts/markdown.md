@@ -1,15 +1,17 @@
 ---
-title: Markdown Example
+title: Markdown 基础语法示例
 published: 2023-10-01
-description: A simple example of a Markdown blog post.
+description: 用于检查标题、段落、列表、引用、表格、代码、数学公式和脚注等 Markdown 渲染效果。
 tags: [demo, markdown]
 category: Examples
 draft: true
 device: Windows
 ---
-# An h1 header
+这是一篇 Markdown 渲染回归测试文章。修改内容样式或 Markdown 插件后，可以通过本页检查常见语法是否仍然正常显示。
 
-Paragraphs are separated by a blank line.
+# 一级标题
+
+段落之间使用空行分隔。
 
 2nd paragraph. _Italic_, **bold**, and `monospace`. Itemized lists
 look like:

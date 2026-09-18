@@ -16,7 +16,7 @@ Android Studio 不是 Android 开发的必需品。真正参与构建的只有�
 - Gradle Wrapper；
 - ADB。
 
-编辑代码可以使用 VS Code、Neovim 或任何文本编辑器。本文参考一个 Kotlin 原生 Android 项目的实际配置，使用项目内工具链完成测试、打包和真机安装。
+编辑代码可以使用 VS Code、Neovim 或其他文本编辑器。下面以 Kotlin 原生 Android 项目为例，使用项目内工具链完成测试、打包和真机安装。
 
 ## 准备环境
 
@@ -94,9 +94,9 @@ app/build/outputs/apk/debug/app-debug.apk
 
 看到 `Success` 即安装完成。
 
-## 最后两个注意点
+## 注意事项
 
 1. 将 `.android-toolchain/`、`.android-user-home/`、`.gradle-user-home/`、`local.properties` 和构建目录加入 `.gitignore`。
 2. Debug APK 不需要额外签名；发布 APK 或 AAB 时，仍需使用 `keytool` 创建 keystore 并配置 Release 签名。
 
-至此，从写代码、运行测试、生成 APK 到安装真机，整个流程都不需要 Android Studio。
+完成测试、APK 构建和真机安装后，这套命令行工具链就已验证可用。Android Studio 仍可用于布局预览和性能分析，但不是构建项目的前置条件。

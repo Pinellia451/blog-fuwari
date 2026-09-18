@@ -1,7 +1,7 @@
 ---
-title: Claude Code 斜杠命令完全指南
+title: Claude Code 斜杠命令使用指南
 published: 2026-06-12
-description: 全面介绍 Claude Code CLI 中所有 / 斜杠命令的用途、用法与实战技巧，帮助你高效驾驭终端中的 AI 编程助手
+description: 按会话、配置、审查、调试和扩展等场景整理 Claude Code CLI 的斜杠命令及使用边界。
 tags: [guide, claude-code, tooling]
 category: Web 与工具
 draft: false
@@ -9,11 +9,9 @@ aigc: Claude Code
 device: MacBook Pro
 ---
 
-## 前言
+[Claude Code](https://claude.com/claude-code) 是 Anthropic 的终端编程工具。多数任务可以直接用自然语言描述；以 `/` 开头的斜杠命令更适合会话管理、配置、代码审查和项目初始化等需要明确控制的操作。
 
-[Claude Code](https://claude.com/claude-code) 是 Anthropic 推出的终端原生 AI 编程助手。除了在交互中自然描述需求之外，它还提供了一套以 `/` 开头的**斜杠命令（Slash Commands）**，用于执行配置、会话管理、代码审查、项目初始化等操作。
-
-本文基于实际使用经验，对所有内置斜杠命令进行系统梳理。
+下面按使用场景整理命令。命令集合会随版本变化，实际可用项以当前客户端的 `/help` 为准。
 
 ---
 
@@ -111,8 +109,8 @@ Skills 是扩展 Claude Code 能力边界的专业化模块：
 
 | 命令 | 功能 |
 |------|------|
-| `/deep-research` | 多源深度调研——自动搜索、交叉验证并生成带引用的报告 |
-| `/claude-api` | Claude API / Anthropic SDK 参考——模型 ID、定价、参数、token 计算等 |
+| `/deep-research` | 多源深度调研：自动搜索、交叉验证并生成带引用的报告 |
+| `/claude-api` | Claude API / Anthropic SDK 参考：模型 ID、定价、参数、token 计算等 |
 | `/update-config` | 通过 settings.json 配置 hooks、权限、环境变量等自动化行为 |
 | `/keybindings-help` | 自定义键盘快捷键 |
 | `/fewer-permission-prompts` | 分析操作历史，生成权限白名单以减少重复授权弹窗 |
@@ -143,8 +141,8 @@ Skills 是扩展 Claude Code 能力边界的专业化模块：
 
 | 命令 | 功能 | 示例 / 说明 |
 |------|------|-------------|
-| `/login` | 登录或切换 Anthropic 账户 | — |
-| `/logout` | 登出当前账户 | — |
+| `/login` | 登录或切换 Anthropic 账户 | 暂无 |
+| `/logout` | 登出当前账户 | 暂无 |
 
 ---
 
@@ -156,7 +154,7 @@ Skills 是扩展 Claude Code 能力边界的专业化模块：
 
 ### 12.2 善用 `/prompt` 排查问题
 
-当 Claude Code 的行为不符合预期时，用 `/prompt` 查看它实际「看到」了哪些指令——包括 CLAUDE.md、memory、系统提示词等。
+当 Claude Code 的行为不符合预期时，用 `/prompt` 查看它实际「看到」了哪些指令，包括 CLAUDE.md、memory、系统提示词等。
 
 ### 12.3 `/compact` 的时机
 
@@ -184,8 +182,6 @@ Skills 是扩展 Claude Code 能力边界的专业化模块：
 
 ---
 
-## 小结
+## 使用原则
 
-Claude Code 的斜杠命令体系涵盖了从会话管理、代码审查、配置调整到自动化编排的完整开发工作流。掌握这些命令可以大幅提升你在终端中的开发效率——将 AI 从「对话伙伴」升级为「可编排的编程环境」。
-
-核心原则：**能说的就直接说，需要精确控制时用命令**。大部分日常操作通过自然语言即可完成，斜杠命令用于配置固化、会话管理、多步骤编排等需要明确控制的场景。
+能直接描述的任务就使用自然语言；需要配置固化、会话管理或多步骤编排时再使用命令。遇到命令不存在或行为与文中不同的情况，先用 `/help` 和 `/status` 确认当前版本与可用能力。

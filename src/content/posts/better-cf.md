@@ -7,37 +7,30 @@ category: Web 与工具
 draft: false
 device: MacBook Pro
 ---
-# 参考
+这次测试以 `blog.pinellia.uk` 为例，目标是改善 Cloudflare 服务在国内网络中的直连表现。参考方案来自 [BestWorkers](https://cmliussss.com/p/BestWorkers/)。
 
-https://cmliussss.com/p/BestWorkers/
+## 测试结果
 
-## 结果记录
-
-尝试加速本博客 blog.pinellia.uk为例
-
-### itdog tcping全绿：
+### ITDOG TCPing 正常
 
 ![1755619518954](https://ipfs.pinellia.uk/ipfs/QmYaCGNTTrshP8FbKaCkbfCfpqWMBE3aVE3G8UtmNF2s2U)
 
-但本地的设备包括电脑手机，在走直连的情况下，访问极其受限，大部分情况下：
+ITDOG 的 TCPing 测试全部通过，但电脑和平板直连时仍然经常无法访问：
 
+```text
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to blog.pinellia.uk
+浏览器：ERR_CONNECTION_CLOSED
 ```
-curl报错为curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to blog.pinellia.uk 
-浏览器报错：ERR_CONNECTION_CLOSED
-```
 
-### 确认非dns问题
+### 排除 DNS 解析差异
 
-clash的dns结果与itdog吻合：
+Clash 的 DNS 解析结果与 ITDOG 一致：
 
 <div style="display: flex; gap: 16px;">
     <img src="https://ipfs.pinellia.uk/ipfs/QmfHVxTswG6Yr3B4ZJVjTMzkSzg5BszYAiLabQH6UN3iXt" alt="1755619893625" style="width: 49%;">
     <img src="https://ipfs.pinellia.uk/ipfs/QmQ1x4uCyp56m4X7q65sS3DJbACVn79DnKv87b2JpjMbpM" alt="1755619405601" style="width: 49%;">
 </div>
 
-尝试指定
-找不到无法访问的原因，走代理的情况下能连接。
-可以ping通解析出来的ip
+解析出的 IP 可以 Ping 通，走代理时也能正常连接，因此问题不像是单纯的 DNS 解析错误。测试期间没有找到稳定复现的具体原因；电脑和平板等待一段时间后恢复直连。
 
-rec：
-平板和电脑等了很长时间莫名其妙就能连接了
+这次调整没有形成可以验证的加速结论。后续排查应分别记录 DNS 结果、TLS 握手、路由和不同运营商网络下的表现，不能只根据 TCPing 全绿判断站点已经可用。

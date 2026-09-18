@@ -9,7 +9,7 @@ device: MacBook Pro
 draft: false
 ---
 
-在日常使用 `conda` 或 `micromamba` 时，很多人都会逐渐积累一些“高频但非官方”的操作，比如：
+长期使用 `conda` 或 `micromamba` 后，Shell 配置中通常会积累一些高频的自定义操作：
 
 - 根据当前目录自动激活某个环境
 - 快速停用当前环境
@@ -23,7 +23,7 @@ draft: false
 - help 信息难以维护
 - 实现和注册耦合太紧，不利于长期演进
 
-这篇文章介绍一种更适合持续扩展的方案：把自定义 `conda` 子命令做成一个小型框架，结构分成三层：
+这里把自定义 `conda` 子命令拆成一个三层的小型框架：
 
 1. `JSON` 指令定义
 2. 通用分发器
@@ -512,9 +512,9 @@ micromamba deactivate
 映射文件 `~/.conda_map.ini` 可以做成很简单的键值格式：
 
 ```ini
-/home/niuhongkai/project/a = py38
-/home/niuhongkai/project/b = ml
-/home/niuhongkai/workspace/demo = testenv
+/home/<username>/project/a = py38
+/home/<username>/project/b = ml
+/home/<username>/workspace/demo = testenv
 ```
 
 解析规则可以是：
@@ -527,10 +527,10 @@ micromamba deactivate
 
 匹配时使用“最长前缀优先”，例如：
 
-- 当前目录：`/home/niuhongkai/project/a/subdir`
+- 当前目录：`/home/<username>/project/a/subdir`
 - 已有映射：
-  - `/home/niuhongkai/project = base-env`
-  - `/home/niuhongkai/project/a = py38`
+  - `/home/<username>/project = base-env`
+  - `/home/<username>/project/a = py38`
 
 最终应选择 `py38`，因为它的路径前缀更长、更具体。
 
@@ -810,6 +810,4 @@ desc = desc.replace("\t", " ").replace("\n", " ")
 - 项目脚手架命令
 - 本地开发环境切换命令
 
-一句话总结：
-
-**把 shell 自定义从“堆脚本”升级成“可注册的命令层”，你会明显感受到维护成本下降。**
+适合迁移到这套结构的判断标准很直接：自定义命令已经需要独立说明、频繁增删，或者一个 `case` 分支开始牵动其他逻辑。只有少量固定别名时，继续保留简单函数反而更容易维护。

@@ -7,25 +7,24 @@ category: module
 draft: true
 device: Windows
 ---
-# 简单教程
+这是一份 Fuwari 本地使用草稿，同时保留 Markdown 语法作为渲染测试。更完整的模板说明见 [参考教程](https://2x.nz/posts/fuwari/)。
 
-https://2x.nz/posts/fuwari/
+## 本地运行
 
-# 使用
-
+```shell
 pnpm dev
+```
 
+确认构建通过后再提交并推送：
+
+```shell
+pnpm build
 git push
+```
 
-# 创建页面
+## 创建独立页面
 
-spec里面创建md
-
-默认渲染为纯md页面
-
-想要自定义就在 `blog-fuwari/src/pages/[spec].astro`排除
-
-从 `blog-fuwari/src/pages/about.astro`创建副本
+在 `src/content/spec/` 中创建 Markdown 文件时，默认使用通用 Markdown 页面渲染。需要自定义布局时，在 `src/pages/[spec].astro` 中排除对应 slug，再以 `src/pages/about.astro` 为基础创建独立页面。
 
 # An h1 header
 

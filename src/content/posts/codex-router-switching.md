@@ -12,7 +12,7 @@ aigc: Codex
 
 完成后，远程服务器上的 Codex 既可以使用官方模型，也可以按需切换到本地 AiMaMi 智能路由，不必每次手工修改 `~/.codex/config.toml`。
 
-本文以 AiMaMi 智能路由为例，整理两条可落地的路线：
+以 AiMaMi 智能路由为例，可以选择两条路线：
 
 1. 使用 Codex Profile，在启动 CLI 时选择配置层；
 2. 使用 Shell 脚本，原地启用或禁用全局配置块，并按需关闭 `app-server` 使配置生效。
@@ -32,7 +32,7 @@ aigc: Codex
 # 菜单模型来自 model_catalog_json；官方 / 中转分流由本地 proxy 决定
 # 在 AiMaMi 里关闭智能路由开关后，本段会被自动移除
 model_provider = "aimai1"
-model_catalog_json = "/sdc/home/niuhongkai/.codex/model-catalogs/codex_router_catalog.json"
+model_catalog_json = "/sdc/home/<username>/.codex/model-catalogs/codex_router_catalog.json"
 # <<< aimami-relay codex-router top end
 ```
 
@@ -132,7 +132,7 @@ Codex 会先读取：
 
 ```toml
 model_provider = "aimai1"
-model_catalog_json = "/sdc/home/niuhongkai/.codex/model-catalogs/codex_router_catalog.json"
+model_catalog_json = "/sdc/home/<username>/.codex/model-catalogs/codex_router_catalog.json"
 ```
 
 Provider 定义仍然保留：
@@ -176,7 +176,7 @@ codex exec --profile official "检查当前代码改动"
 
 ```toml
 model_provider = "aimai1"
-model_catalog_json = "/sdc/home/niuhongkai/.codex/model-catalogs/codex_router_catalog.json"
+model_catalog_json = "/sdc/home/<username>/.codex/model-catalogs/codex_router_catalog.json"
 model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 ```
@@ -227,7 +227,7 @@ codex-router
 
 ```toml
 # aimami-router-disabled: model_provider = "aimai1"
-# aimami-router-disabled: model_catalog_json = "/sdc/home/niuhongkai/.codex/model-catalogs/codex_router_catalog.json"
+# aimami-router-disabled: model_catalog_json = "/sdc/home/<username>/.codex/model-catalogs/codex_router_catalog.json"
 ```
 
 重新开启时，脚本只移除 `# aimami-router-disabled: ` 前缀。原有说明注释、块标记和块外配置都不会被修改。
@@ -499,7 +499,7 @@ codex-provider sync
 | 希望所有新会话统一切换 | 开关脚本 | 直接改变全局 `config.toml` |
 | 无人值守切换并刷新服务 | 开关脚本配合 `-y` | 可修改配置并结束旧 `app-server` |
 
-简单来说：主要使用 CLI 时优先选择 Profile；主要依赖桌面 App 或常驻服务时，使用脚本更直接。
+主要使用 CLI 时优先选择 Profile；主要依赖桌面 App 或常驻服务时，使用脚本更直接。
 
 ## 最终目录结构
 
