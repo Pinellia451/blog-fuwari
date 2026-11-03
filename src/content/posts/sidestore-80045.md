@@ -1,5 +1,5 @@
 ---
-title: 2026 年 iOS 27 侧载实战：SideStore 与 LiveContainer 的七个坑
+title: 2026 年 iOS 侧载实战：SideStore 与 LiveContainer 的七个坑
 published: 2026-11-03
 description: 记一次在 iOS 27.2 上从零配通 SideStore 与 LiveContainer 嵌合体的过程，-80045 登录失败、配对文件格式歧义、证书团队 ID 不匹配这些坑的成因和解法，还有免 JIT、多开和自动续期的配置。
 tags: [sidestore, livecontainer, ios, sideload, guide]
@@ -33,11 +33,11 @@ aigc: Kimi
 
 ## 坑 1：登录直接 -80045
 
-输完 Apple ID 和密码，屏幕上直接甩出一个 `Failed to Sign In: This action cannot be completed at this time. (-80045)`，这个报错最坑的地方是它出现在密码校验之前，苹果在身份验证那一步就把请求拒了，所以改密码、换网络、重装 SideStore 全都不管用，白折腾半天。
+输完 Apple ID 和密码，屏幕上直接甩出一个 `Failed to Sign In: This action cannot be completed at this time. (-80045)`。这个报错最坑的地方是它出现在密码校验之前，苹果在身份验证那一步就把请求拒了，所以改密码、换网络、重装 SideStore 全都不管用，白折腾半天。
 
 ![SideStore 登录页弹出 -80045](./sidestore-80045/01.jpg)
 
-原因在两条信息对不上。SideStore 登录时要递给苹果两样东西，一份自称身份的 headers（Client Info 与 User Agent），一份 Anisette 服务生成的设备验证数据，2026 年 10 月 12 日起苹果开始校验这两者是否一致，默认配置里 headers 自称是一台跑 macOS 的 Mac，Anisette 数据却是 iPhone 上生成的，两边对不上，请求就被驳回。
+原因在两条信息对不上。SideStore 登录时要递给苹果两样东西，一份自称身份的 headers（Client Info 与 User Agent），一份 Anisette 服务生成的设备验证数据，2026 年 10 月 12 日起苹果开始校验这两者是否一致。默认配置里 headers 自称是一台跑 macOS 的 Mac，Anisette 数据却是 iPhone 上生成的，两边对不上，请求就被驳回。
 
 界面上的坑藏在颜色里，那两个框的内容是白字，看着像空着，其实有值，「我什么都没填」基本是错觉，真正要换掉的是这份默认身份。
 
@@ -78,13 +78,13 @@ User Agent  : akd/1.0 CFNetwork/808.1.4
 
 重新登录有两个细节值得留意，Sign in 只点一次，连点会触发苹果的风控，越急越登不上，如果别的苹果设备弹出 6 位验证码，记得先记下来再输，这个码只显示一次。
 
-卡在 503 不是失败。走到这一步、验证码也输完了的话，界面会弹出一段没被解析的 HTML，里面写着 `503 Service Temporarily Unavailable` 和 `Apple`，说明身份验证已经过了，是苹果自己的登录服务器在限流，那两周大量用户集中重试，风控很紧，这时候唯一正确的操作是停手，等 30 到 60 分钟再试一次，期间可以顺手在 Safari 里登一下 appleid.apple.com，确认账号本身没有「需要验证」或条款更新的提示。
+卡在 503 不是失败。走到这一步、验证码也输完了的话，界面会弹出一段没被解析的 HTML，里面写着 `503 Service Temporarily Unavailable` 和 `Apple`，说明身份验证已经过了，是苹果自己的登录服务器在限流。那两周大量用户集中重试，风控很紧，这时候唯一正确的操作是停手，等 30 到 60 分钟再试一次，期间可以顺手在 Safari 里登一下 appleid.apple.com，确认账号本身没有「需要验证」或条款更新的提示。
 
 ![验证码通过后，苹果服务器返回 503](./sidestore-80045/08.png)
 
 ## 坑 2：配对文件格式不明确
 
-导入配对文件时提示 `The pairing file format is ambiguous`，原因是文件里同时装了 Remote Pairing 和 Lockdown 两套凭证，而 2026 年 9 月 20 日之后的 Nightly 只接受单一协议，更麻烦的是 iOS 27 改了 Lockdown 的配对格式，设备上根本没法用，SideStore 实际只需要 Remote Pairing 那一份。
+导入配对文件时提示 `The pairing file format is ambiguous`，原因是文件里同时装了 Remote Pairing 和 Lockdown 两套凭证，而 2026 年 9 月 20 日之后的 Nightly 只接受单一协议。更麻烦的是 iOS 27 改了 Lockdown 的配对格式，设备上根本没法用，SideStore 实际只需要 Remote Pairing 那一份。
 
 ![配对文件格式歧义的报错](./sidestore-80045/02.jpg)
 
