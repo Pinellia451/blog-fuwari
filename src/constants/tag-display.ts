@@ -75,6 +75,8 @@ export const tagDisplayMap: Record<string, string> = {
 	"expressive-code": "Expressive Code",
 	"oh-my-zsh": "Oh My Zsh",
 	linux: "Linux",
+	windows: "Windows",
+	tailcat: "Tailcat",
 };
 
 /**
