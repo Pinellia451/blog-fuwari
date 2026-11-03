@@ -77,6 +77,13 @@ export const tagDisplayMap: Record<string, string> = {
 	linux: "Linux",
 	windows: "Windows",
 	tailcat: "Tailcat",
+
+	// ── 环境与工具 ──
+	conda: "Conda",
+	zsh: "Zsh",
+	astro: "Astro",
+	mihomo: "Mihomo",
+	p10k: "Powerlevel10k",
 };
 
 /**
