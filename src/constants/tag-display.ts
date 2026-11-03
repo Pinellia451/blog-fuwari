@@ -77,6 +77,13 @@ export const tagDisplayMap: Record<string, string> = {
 	linux: "Linux",
 	windows: "Windows",
 	tailcat: "Tailcat",
+
+	// ── iOS 侧载 ──
+	ios: "iOS",
+	iphone: "iPhone",
+	sidestore: "SideStore",
+	livecontainer: "LiveContainer",
+	sideload: "侧载",
 };
 
 /**
