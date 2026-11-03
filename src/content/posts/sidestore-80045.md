@@ -78,7 +78,7 @@ User Agent  : akd/1.0 CFNetwork/808.1.4
 
 **关于重新登录的两个细节。** 一是 Sign in **只点一次**，连点会触发苹果的风控，越急越登不上；二是如果别的苹果设备弹出 6 位验证码，记得先记下来再输，这个码只显示一次。
 
-**卡在 503 不是失败。** 如果走到这一步，验证码也输完了，界面返回 `503 Service Temporarily Unavailable`，说明身份验证已经通过，是苹果自己的登录服务器在限流。那两周大量用户集中重试，风控很紧。这时候唯一正确的操作是停手，等 30 到 60 分钟再试一次。期间可以顺手在 Safari 里登一下 appleid.apple.com，确认账号本身没有「需要验证」或条款更新的提示。
+**卡在 503 不是失败。** 如果走到这一步，验证码也输完了，界面弹出的是一段没被解析的 HTML，里面写着 `503 Service Temporarily Unavailable` 和 `Apple`，说明身份验证已经通过，是苹果自己的登录服务器在限流。那两周大量用户集中重试，风控很紧。这时候唯一正确的操作是停手，等 30 到 60 分钟再试一次。期间可以顺手在 Safari 里登一下 appleid.apple.com，确认账号本身没有「需要验证」或条款更新的提示。
 
 ![验证码通过后，苹果服务器返回 503](./sidestore-80045/08.png)
 
@@ -134,13 +134,14 @@ User Agent  : akd/1.0 CFNetwork/808.1.4
 
 ![证书变更后要求 Resign](./sidestore-80045/11.png)
 
-重装过程中会问扩展怎么办，四个选项其实是在抢那 10 个 App ID 名额：
+重装过程中会问扩展怎么办，几个选项其实是在抢那 10 个 App ID 名额：
 
 | 选项 | 代价 | 适合 |
 |---|---|---|
-| Remove App Extensions | 没有小组件、分享菜单入口 | 名额紧张时的默认选择 |
-| Keep App Extensions (Use Main Profile) | 占 4 个 App ID | 需要 Multitask 多任务窗口 |
-| 逐个单独注册 | 每个扩展各占 1 个 | 只想要其中某一个 |
+| Keep App Extensions (Use Main Profile) | 用主配置保留全部扩展，占 4 个 App ID | 需要 Multitask 多任务窗口 |
+| Keep App Extensions (Register App ID for Each Extension) | 每个扩展单独注册，占的名额一样 | 极少用到，和上一项没有实质区别 |
+| Remove App Extensions | 全部删掉，没有小组件和分享菜单入口 | 名额紧张时的默认选择 |
+| Choose App Extensions | 自己勾选保留哪几个 | 只想要小组件这类折中场景 |
 
 这些扩展（桌面倒计时小组件、分享菜单里「用 SideStore 打开」之类）都是锦上添花，装 IPA、签名、刷新、登录这些核心能力全在主程序里，所以免费账号下我选的是 Remove。
 
