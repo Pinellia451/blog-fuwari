@@ -9,6 +9,14 @@ device: iPhone
 aigc: Kimi
 ---
 
+<style>
+	.custom-md img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+</style>
+
 十月中旬苹果动了 Apple ID 登录的校验逻辑，侧载圈子里一片 -80045，我本来只想把 SideStore 重装一遍，结果一路从登录报错排查到免 JIT 签名，折腾了好几个晚上。
 
 好在每个坑的成因都挺具体，配对文件、Anisette 身份、证书、App Group 里焊死的团队 ID，看着散，其实是三条一致性没对上：身份要一致，协议要单一，账号要统一，理清这三条，剩下的基本就是复制粘贴。
@@ -41,7 +49,7 @@ aigc: Kimi
 
 界面上的坑藏在颜色里，那两个框的内容是白字，看着像空着，其实有值，「我什么都没填」基本是错觉，真正要换掉的是这份默认身份。
 
-<div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
+<div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; justify-content: center;">
 
 ![User Customizations 里 On-Device Anisette 处于开启状态](./sidestore-80045/05.png)
 
@@ -136,7 +144,7 @@ User Agent  : akd/1.0 CFNetwork/808.1.4
 | Remove App Extensions | 全部删掉，没有小组件和分享菜单入口 | 名额紧张时的默认选择 |
 | Choose App Extensions | 自己勾选保留哪几个 | 只想要小组件这类折中场景 |
 
-<div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
+<div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap; justify-content: center;">
 
 ![证书变更后要求 Resign](./sidestore-80045/11.png)
 
