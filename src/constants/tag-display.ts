@@ -84,6 +84,12 @@ export const tagDisplayMap: Record<string, string> = {
 	sidestore: "SideStore",
 	livecontainer: "LiveContainer",
 	sideload: "侧载",
+	// ── 环境与工具 ──
+	conda: "Conda",
+	zsh: "Zsh",
+	astro: "Astro",
+	mihomo: "Mihomo",
+	p10k: "Powerlevel10k",
 };
 
 /**
