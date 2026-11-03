@@ -41,7 +41,7 @@ aigc: Kimi
 
 界面上的坑藏在颜色里，那两个框的内容是白字，看着像空着，其实有值，「我什么都没填」基本是错觉，真正要换掉的是这份默认身份。
 
-<div style="display: flex; gap: 16px; align-items: flex-start;">
+<div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
 
 ![User Customizations 里 On-Device Anisette 处于开启状态](./sidestore-80045/05.png)
 
@@ -136,7 +136,7 @@ User Agent  : akd/1.0 CFNetwork/808.1.4
 | Remove App Extensions | 全部删掉，没有小组件和分享菜单入口 | 名额紧张时的默认选择 |
 | Choose App Extensions | 自己勾选保留哪几个 | 只想要小组件这类折中场景 |
 
-<div style="display: flex; gap: 16px; align-items: flex-start;">
+<div style="display: flex; gap: 16px; align-items: flex-start; flex-wrap: wrap;">
 
 ![证书变更后要求 Resign](./sidestore-80045/11.png)
 
