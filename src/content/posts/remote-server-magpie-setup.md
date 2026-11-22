@@ -1,8 +1,8 @@
 ---
 title: 都什么年代了还在用 CC Switch？无桌面服务器部署 Magpie，直连与 Mac 反向隧道双通道实战
 published: 2026-11-22
-description: 记录在无可视化桌面的远程 Linux GPU 服务器上部署 Magpie（TUI + Serve）的完整实战：从「本机聚合优先」调整为「直连中转优先 + Mac Magpie 反向隧道互补回退」，涵盖模型列表精细化裁剪、接入 Codex 与 Claude Code、Screen 常驻以及对比 CC Switch 后台机制的深度排查。
-tags: [magpie, claude-code, codex, ssh, linux, ai, tooling]
+description: 记录在无可视化桌面的远程 Linux GPU 服务器上部署 Magpie（TUI + Serve）并联动本机 Mac 聚合网关的完整实战：涵盖直连中转优先 + SSH 反向隧道回退架构、模型列表裁剪、接入 Codex 与 Claude Code、对比 CC Switch 后台机制，以及 Mac 端桌面版 Codex（ChatGPT.app）与 CLI 模型列表/Fast 模式/自动审批一致性问题的深度排障。
+tags: [magpie, claude-code, codex, ssh, linux, macos, ai, tooling]
 category: 环境与系统
 draft: false
 aigc: Gemini 4 Neon
@@ -11,7 +11,7 @@ device: Linux
 
 在远程 Linux GPU 服务器上跑 Claude Code、Codex 这类 CLI Agent 时，最头疼的往往不是工具本身，而是**模型与上游通道的管理**：一部分常用模型有稳定的公网中转站，另一部分本地独占通道（比如跑在个人 Mac 上的本地 CLI 桥接或聚合订阅）又只能在笔记本上用。如果每次切模型都要手改 `~/.claude/settings.json` 或 `~/.codex/config.toml`，很容易留下历史残留字段，维护成本极高。
 
-最近在远程无桌面 Ubuntu 服务器上落地了 [Magpie](https://github.com/yetone/magpie)，把「公网直连中转」和「本机 Mac 上的 Magpie 聚合网关」统一收口到了服务器本地的 `127.0.0.1:3425`。这篇文章从架构演进讲起，完整复盘安装、SSH 反向隧道打通、模型精细化裁剪、接入 Codex 与 Claude Code、以及最后排查「为什么 CC Switch 不用起后台而 Magpie 需要」的全过程。
+最近在远程无桌面 Ubuntu 服务器上落地了 [Magpie](https://github.com/yetone/magpie)，把「公网直连中转」和「本机 Mac 上的 Magpie 聚合网关」统一收口到了服务器本地的 `127.0.0.1:3425`。这篇文章从架构演进讲起，完整复盘安装、SSH 反向隧道打通、模型精细化裁剪、接入 Codex 与 Claude Code、排查「为什么 CC Switch 不用起后台而 Magpie 需要」，以及最后解决 **Mac 本机桌面端 Codex（`ChatGPT.app`）与 Codex CLI 不一致**（模型列表不同步、Fast 切换缺失、无账号登录态下自动审批）的全过程。
 
 ::github{repo="yetone/magpie"}
 
@@ -381,15 +381,158 @@ loginctl show-user "$USER" -p Linger
 
 缺点是进程异常退出后不会像 `systemd` 那样自动重启，日常使用还是 `systemd --user` 或按需手动维护 `screen` 更直观。
 
-## 七、常用运维命令速查
+## 七、Mac 端排障实录：解决桌面端 Codex 与 CLI 的一致性问题
+
+远端服务器打通之后，回到本机 Mac 上日常使用时，又踩到了一个很隐蔽的跨端一致性坑：**同一份 `~/.codex/config.toml`、同一个本机 Magpie 网关，Codex CLI 已经一切正常，但统一桌面端 `/Applications/ChatGPT.app`（`com.openai.codex`）却表现不同步**。顺藤摸瓜排查下来，把桌面端模型列表不同步、Fast / Normal 开关缺失，以及无官方登录态下的自动审批（Guardian）三个问题一次连根拔起。
+
+### 1. 现象与排雷：桌面端 `ChatGPT.app` 模型列表为何与 CLI 不同步？
+
+- **现象**：Codex CLI 已经正常识别并展示 Magpie 暴露的全部 19 个模型（涵盖 `auto/*`、`sub4/*`、`opencode-go/*`、`agy-cli/*`）与 Fast 选项；但打开 Mac 上的 `/Applications/ChatGPT.app` 后，模型选择器里显示的依然是已登录 ChatGPT 账号自带的模型列表，仿佛完全忽略了 Magpie。
+- **先排除的「假嫌疑」**：
+  1. 检查桌面端拉起的内置 `codex app-server`，其生效配置完全正确，包含了：
+     - `openai_base_url = "http://127.0.0.1:3425/backend-api/codex"`
+     - `model_catalog_json = "/Users/<username>/.codex/magpie-desktop-models.json"`
+  2. 带着 `CODEX_INTERNAL_ORIGINATOR_OVERRIDE="Codex Desktop"` 直接调用内置二进制的 `model/list`，也能稳定返回全部 19 个 Magpie 模型，并不受 `~/.codex/models_cache.json` 缓存污染。
+  3. 桌面端前端本地过滤逻辑在 `model_catalog_json` 非空时也会正常放行自定义模型。
+
+既然底层 `app-server` 和本地模型目录全都是对的，问题就只能出在桌面端前端的**模式路由与接口选择**上。检查 `/Applications/ChatGPT.app/Contents/Resources/app.asar` 与本地日志（`~/Library/Logs/com.openai.codex/`）后，定位到两层根因：
+
+1. **主因：`auth_mode: "chatgpt"` 叠加 `conversationDetailMode = "STEPS_PROSE"`，绕过了本地模型目录**
+   - 本机 `~/.codex/auth.json` 当前处于 ChatGPT 账号登录态（`auth_mode: "chatgpt"`），而 `~/.codex/config.toml` 中 `[desktop]` 原本配置的是 `conversationDetailMode = "STEPS_PROSE"`。
+   - 桌面端前端会把 `"STEPS_PROSE"` 映射为 `everyday` 模式（`entryPoint: "chatgpt"`），只有 `"STEPS_COMMANDS"` 才会映射为 `coding` 模式（`entryPoint: "codex"`）。
+   - 在 ChatGPT 登录态的 `everyday` / 共享首页（`usesSharedHome` + `merged_picker`）下，模型选择器会直接请求 `https://chatgpt.com/backend-api/models`（Work 默认项走 `/wham/work/settings`），压根不走本地 `openai_base_url` 与 `model_catalog_json`。
+2. **次因：多 Host 视角下的作用域隔离**
+   - 如果 `ChatGPT.app` 同时连着远端 SSH Host（如 `remote-ssh-discovered:<server>`）或 Cloud（`hostId=durable`），选中 Chat、Cloud 或远端 SSH Host 时，会各自查询对应 Host 侧的 `model/list`，并不会读取本机的 `~/.codex/magpie-desktop-models.json`。
+
+### 2. 解决方案与安全重启姿势
+
+根据是否需要保留桌面端内的 ChatGPT 账号登录态，有两种解法：
+
+#### 方案 A：保留 ChatGPT 登录态（修改 `[desktop]` 模式，实测生效）
+
+修改 `~/.codex/config.toml`，将 `[desktop]` 下的 `conversationDetailMode` 切换为 `STEPS_COMMANDS`：
+
+```toml
+[desktop]
+conversationDetailMode = "STEPS_COMMANDS"
+```
+
+保存后**干净重启** `/Applications/ChatGPT.app`，切换到 **Work / Codex + Local** 视图，桌面端模型列表即刻与 Codex CLI 保持一致。
+
+> [!NOTE]
+> 保留 ChatGPT 登录态期间，Chat 标签页与 `merged_picker` 共享首页仍然会展示 ChatGPT 账号侧的模型列表，这是预期行为。
+
+#### 方案 B：追求桌面端与 CLI 100% 统一（退出 ChatGPT 登录态）
+
+如果希望桌面端所有选择器彻底屏蔽云端账号模型，可以直接在 `ChatGPT.app` 内退出 ChatGPT 账号登录（改用 API Key / 非 `chatgpt` 鉴权模式）。此时前端会强制进入 `coding` 模式，关闭 `usesSharedHome` 与 `/backend-api/models`，所有模型选择器统一从本地 `app-server` 的 `model/list` 拉取。
+
+#### 重启 `ChatGPT.app` 避坑：千万别用 `pkill -f Codex`
+
+改完配置后需要重启桌面端，但这里踩了一个非常容易中招的 macOS 进程坑：
+
+- **参数大小写**：macOS 下 `pkill -f` 才是按命令行匹配，大写 `-F` 是读取 PID 文件；
+- **杀不掉主进程**：`/Applications/ChatGPT.app` 主进程的路径是 `/Applications/ChatGPT.app/Contents/MacOS/ChatGPT`，里面根本不含 `Codex` 字样。执行 `pkill -f Codex` 只会杀掉 Renderer、GPU 和内置 `codex app-server` 等子进程，主进程依然存活，无法完成干净重启；
+- **会误伤无关程序**：`pgrep -fl Codex` 容易顺带命中 `CodexBarWidget`、`SkyComputerUseService` 等工具；若写成小写 `pkill -f codex`，甚至会把终端里正在干活的 Codex CLI 会话一锅端。
+
+正确的重启方式如下：
+
+```bash
+# 优雅重启 ChatGPT.app（推荐）
+osascript -e 'tell application "ChatGPT" to quit' && sleep 1 && open -a /Applications/ChatGPT.app
+
+# 界面卡死时仅精准强杀主进程并重启
+pkill -x ChatGPT && open -a /Applications/ChatGPT.app
+```
+
+### 3. 联动修复：让桌面端与 CLI 自动出现 Fast / Normal 切换选项
+
+解决完模型列表同步后，还顺手查清了另一个困扰：中转站明明支持 Codex 快速模式，但此前无论桌面端还是 CLI 都没有自动出现 **Fast / Normal** 切换选项，总不想每次都手改 `~/.codex/magpie-desktop-models.json`。
+
+直接请求上游接口 `GET https://sub-api.example.com/v1/models?client_version=0.169.1` 实测发现，上游已经返回了完整的 Codex 原生模型定义（包含 `service_tiers`、`additional_speed_tiers: ["fast"]` 等字段）。排查 Magpie 源码后，发现是两个环节叠加导致的：
+
+1. **供应商没配 `responses` 端点，跳过了 Codex 原生目录拉取**：此前 `~/.config/magpie/providers.json` 里只给中转站配了 `chat`（`baseAPI: "chat"`）。而在 Magpie 的模型拉取逻辑（`internal/provider/models.go`）中，只有 `proto == Responses` 才会触发 `codexEntries()` 去拉带 `?client_version=...` 的 Codex 原生目录；只配 `chat` 时只会请求普通 `/v1/models`，缓存里所有模型的 `Codex` 字段都是空的。
+2. **兜底条目缺少 `additional_speed_tiers`**：当缓存里没有原生 `Codex` 定义时，Magpie 会走 `internal/codexcat/codexcat.go` 的兜底构造——它虽然会写入 `service_tiers: [{"id": "priority", ...}]`，但**不会生成 `additional_speed_tiers`**。只有保留上游原生 `Codex` 定义时，才会原样透传 `additional_speed_tiers: ["fast"]`，客户端也才会渲染出 Fast / Normal 开关。
+
+修复方法非常干脆：
+
+1. 在 `~/.config/magpie/providers.json` 中为对应中转站补上 `responses` 端点，并将 `baseAPI` 设为 `"responses"`：
+
+```json
+{
+  "id": "sub4",
+  "name": "sub4",
+  "chat": "https://sub-api.example.com",
+  "responses": "https://sub-api.example.com",
+  "baseAPI": "responses",
+  "bestInFamily": true
+}
+```
+
+2. 强制刷新一次该供应商的模型缓存：
+
+```bash
+magpie provider models sub4
+```
+
+刷新后 `~/.cache/magpie/models/sub4.json` 直接从 `7 KB` 涨到了 `206 KB`，完整写入了原生 Codex 模型定义；随即检查 `~/.codex/magpie-desktop-models.json` 与 `codex app-server` 的 `model/list`，可以看到 `sub4/gpt-6.2-sol`、`sub4/gpt-6.2-astra` 都已带上 `additional_speed_tiers: ["fast"]` 和 `service_tiers: ["priority"]`，重启桌面端或 CLI 后 Fast / Normal 开关自动出现。
+
+> [!TIP]
+> 如果刷新后发现只有部分模型带快速开关，不必紧张：一是取决于上游接口是否对该模型返回了 `additional_speed_tiers: ["fast"]`（部分老版本模型会因 `"bestInFamily": true` 被自动隐藏）；二是 `auto/*` 路由组条目属于 Magpie 兜底生成，只含 `service_tiers`，默认不包含 `additional_speed_tiers`。
+
+### 4. 补全无官方登录态下的 AutoApprove（Guardian）审核链路
+
+如果按前面「方案 B」退出了官方 ChatGPT 账号，或者在无登录态的远程 Linux 服务器上跑 Codex，依然可以正常使用 **AutoApprove / ApproveForMe（Guardian）**——从 `openai/codex` 源码可以确认，`guardian_approval` 默认开启且不强依赖官方账号登录。
+
+唯一需要注意的是：经由 Magpie 网关且未登录官方账号时，如果模型目录没有指定 `auto_review_model_override`，Codex 会直接请求裸模型名 `codex-auto-review`，Magpie 无法自动匹配到具体中转站，容易报错或回退。只需在 Codex 与 Magpie 两端各配一行即可打通：
+
+1. **Codex 侧**（`~/.codex/config.toml`）：
+
+```toml
+approval_policy = "on-request"
+approvals_reviewer = "guardian_subagent"
+```
+
+2. **Magpie 侧**（`~/.config/magpie/settings.json`）：
+
+```json
+{
+  "codexAutoReview": "sub4/codex-auto-review"
+}
+```
+
+- 填写 `"sub4/codex-auto-review"` 时，Magpie 会在导出的每条 Codex 模型定义中自动注入 `auto_review_model_override: "sub4/codex-auto-review"`，把审核请求精准路由到中转站的专用审核模型；
+- 如果中转站不提供 `codex-auto-review`，也可以把值填成 `"session"`，Magpie 会让每条模型的审核请求直接复用当前会话正在使用的模型。
+
+## 八、常用运维命令速查
 
 | 目标 | 命令 |
 | --- | --- |
 | 查看所有 Agent 接入状态 | `magpie ls` |
 | 查看 Provider 与通道状态 | `magpie providers` |
 | 查看当前对外暴露的模型清单 | `magpie models` |
+| 刷新指定供应商模型缓存（拉取 Codex 原生目录） | `magpie provider models <id>` |
 | 动态暴露 / 隐藏某个模型 | `magpie provider models <id> +<model>` / `-<model>` |
 | 切换 Claude Code / Codex 模型 | `magpie claude <provider/model>` / `magpie codex <provider/model>` |
 | 彻底还原某个 Agent 的原生配置 | `magpie claude default` / `magpie codex default` |
 | 在无桌面环境下打开终端面板 | `magpie tui` |
 | 在线升级远端 Magpie | `magpie update` |
+| macOS 优雅重启 `ChatGPT.app` | `osascript -e 'tell application "ChatGPT" to quit' && sleep 1 && open -a /Applications/ChatGPT.app` |
+
+如果排查 Codex 桌面端模型目录字段是否同步到位，还可以直接用一段轻量 Python 快速检查 `~/.codex/magpie-desktop-models.json`：
+
+```bash
+python3 - <<'PY'
+import json, pathlib
+p = pathlib.Path.home() / ".codex/magpie-desktop-models.json"
+d = json.loads(p.read_text())
+for m in d.get("models", []):
+    slug = m.get("slug", "")
+    if slug.startswith(("sub4/", "auto/")):
+        print(
+            slug,
+            "speed:", m.get("additional_speed_tiers"),
+            "tiers:", [t.get("id") for t in m.get("service_tiers", [])],
+            "auto_review:", m.get("auto_review_model_override"),
+        )
+PY
+```
